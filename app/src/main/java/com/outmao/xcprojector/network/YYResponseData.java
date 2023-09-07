@@ -20,7 +20,7 @@ public class YYResponseData<T> {
     }
 
     private int code;
-    private boolean success;
+
     private String message;
 
     public String getMessage() {
@@ -32,29 +32,11 @@ public class YYResponseData<T> {
     }
 
     public boolean isSuccess() {
-        //  return success || code == 0 || code == 200;
-        return success || code == 200;
-    }
-
-    public String islogin() {
-        String str = "";
-        if (message.substring(0, 0).equals("4")) {
-            return str = "不可登录";
-        } else {
-            return str = "可登录";
-        }
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
+        return code == 200;
     }
 
     public int getCode() {
         return code;
-    }
-
-    public boolean isNeedLogin() {
-        return code >= 400 && code < 500;
     }
 
     public void setCode(int code) {
@@ -78,5 +60,6 @@ public class YYResponseData<T> {
         }
         return null;
     }
+
 
 }

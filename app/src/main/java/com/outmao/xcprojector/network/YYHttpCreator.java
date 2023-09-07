@@ -1,6 +1,8 @@
 package com.outmao.xcprojector.network;
 
 import com.outmao.xcprojector.BuildConfig;
+import com.outmao.xcprojector.config.AppConfig;
+import com.outmao.xcprojector.util.DeviceUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class YYHttpCreator {
 
-    private static final String kBaseRootDIR = "api/";
+    private static final String kBaseRootDIR = "device/";
 
     public static final String kBseURL = (BuildConfig.HTTP_HOST + kBaseRootDIR);
 
@@ -58,6 +60,7 @@ public class YYHttpCreator {
                 if(queryParamMap ==null){
                     queryParamMap = new HashMap<>();
                 }
+                queryParamMap.put(AppConfig.IMEI_KEY, DeviceUtils.getUUID());
                 return queryParamMap;
             }
 
@@ -66,6 +69,7 @@ public class YYHttpCreator {
                 if(formBodyParamMap ==null){
                     formBodyParamMap = new HashMap<>();
                 }
+                formBodyParamMap.put(AppConfig.IMEI_KEY, DeviceUtils.getUUID());
                 return formBodyParamMap;
             }
         });

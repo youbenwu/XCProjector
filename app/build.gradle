@@ -30,12 +30,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "HTTP_HOST", "\"https://msfn-api.z-code.cn/\"")
+            buildConfigField("String", "HTTP_HOST", "\"http://tengdamy.cn/\"")
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "HTTP_HOST", "\"https://msfn-api.z-code.cn/\"")
+            buildConfigField("String", "HTTP_HOST", "\"http://tengdamy.cn/\"")
         }
     }
     compileOptions {
@@ -67,5 +67,8 @@ dependencies {
 
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'io.reactivex:rxjava:1.3.8'
+
+    //用来获取地址信息
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
 
 }

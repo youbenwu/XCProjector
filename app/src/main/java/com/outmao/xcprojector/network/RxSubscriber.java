@@ -1,11 +1,8 @@
 package com.outmao.xcprojector.network;
 
-import android.app.Application;
-import android.text.TextUtils;
 import android.util.Log;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
-
 import rx.Subscriber;
 
 /**

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">欣辰投影仪</string>
+    <string name="app_name">喵影互娱</string>
     <string name="action_settings">设置</string>
 
     <!-- Strings used for fragments for navigation -->
@@ -10,6 +10,10 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_activate">ActivateActivity</string>
 
 
 </resources>
