@@ -70,7 +70,7 @@ public class SplashActivity extends AppCompatActivity {
         }, 1500);
 
         //测试接口
-        //this.api_test_slide_list();
+        this.api_test_slide_list();
        // this.getLocation();
 
     }
