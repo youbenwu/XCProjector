@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -169,5 +170,15 @@ public class SplashActivity extends AppCompatActivity {
 //            }
 //        }
 //    }
+
+    private void player(){
+        String url = "http://192.168.0.1/1.mp4";
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        String type = "video/*";
+        Uri uri = Uri.parse(url);
+        intent.setDataAndType(uri,type);
+        startActivity(intent);
+    }
 
 }
