@@ -93,7 +93,7 @@ public class HomeFragment  extends Fragment {
                         super.onSuccess(responseData);
                         Log.d("slide_list接口返回", responseData.toString());
                         if(responseData.isSuccess()){
-                            // 封装数据1
+                            // 封装数据
 
                         } else {
 
