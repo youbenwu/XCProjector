@@ -21,6 +21,7 @@ import com.outmao.xcprojector.config.MyApplication;
 import com.outmao.xcprojector.databinding.ActivityActivateBinding;
 import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
+import com.outmao.xcprojector.util.BaiduLocationManager;
 import com.outmao.xcprojector.util.DeviceUtils;
 import com.outmao.xcprojector.util.SharepreferencesUtils;
 
@@ -103,6 +104,14 @@ public class ActivateActivity extends AppCompatActivity {
         String area="天河区";
         String longitude="1";
         String latitude="1";
+
+        if(BaiduLocationManager.manager.location!=null){
+            province=BaiduLocationManager.manager.location.getProvince();
+            city=BaiduLocationManager.manager.location.getCity();
+            area=BaiduLocationManager.manager.location.getDistrict();
+            longitude=BaiduLocationManager.manager.location.getLongitude()+"";
+            latitude=BaiduLocationManager.manager.location.getLatitude()+"";
+        }
 
 
         HttpApiService.getInstance().account_active(location,room_id,name,province,city,area,longitude,latitude,DeviceUtils.getUUID())

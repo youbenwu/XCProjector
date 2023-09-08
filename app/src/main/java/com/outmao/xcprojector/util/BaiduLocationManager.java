@@ -12,21 +12,25 @@ public class BaiduLocationManager {
 
     public static BaiduLocationManager manager=new BaiduLocationManager();
 
+    public BDLocation location;
+
+    private LocationClient locationClient;
 
 
     /**
      * 初始化定位参数配置
      */
 
-    private void initLocationOption() throws Exception {
-
+    public void initLocationOption(Context context) throws Exception {
+        LocationClient.setAgreePrivacy(true);
 //定位服务的客户端。宿主程序在客户端声明此类，并调用，目前只支持在主线程中启动
-        LocationClient locationClient = new LocationClient(MyApplication.getAppContext());
+        locationClient = new LocationClient(context);
 //声明LocationClient类实例并配置定位参数
         LocationClientOption locationOption = new LocationClientOption();
         MyLocationListener myLocationListener = new MyLocationListener();
 //注册监听函数
         locationClient.registerLocationListener(myLocationListener);
+
 //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
         locationOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
 //可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
@@ -68,6 +72,7 @@ public class BaiduLocationManager {
     public class MyLocationListener extends BDAbstractLocationListener {
         @Override
         public void onReceiveLocation(BDLocation location){
+            BaiduLocationManager.manager.location=location;
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
             //以下只列举部分获取经纬度相关（常用）的结果信息
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
@@ -82,6 +87,10 @@ public class BaiduLocationManager {
             String coorType = location.getCoorType();
             //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
             int errorCode = location.getLocType();
+
+            String pro=location.getProvince();
+            String city=location.getCity();
+            String area=location.getDistrict();
 
         }
     }
