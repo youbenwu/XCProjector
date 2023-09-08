@@ -17,6 +17,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.outmao.xcprojector.api.HttpApiService;
 import com.outmao.xcprojector.api.models.SlideListData;
+import com.outmao.xcprojector.config.AppConfig;
 import com.outmao.xcprojector.config.MyApplication;
 import com.outmao.xcprojector.databinding.ActivityActivateBinding;
 import com.outmao.xcprojector.network.RxSubscriber;
@@ -29,8 +30,6 @@ import java.net.InetAddress;
 
 public class ActivateActivity extends AppCompatActivity {
 
-    //设备激活状态KEY
-    private static final String ACTIVE_STATUS_KEY="ACTIVE_STATUS";
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityActivateBinding binding;
@@ -148,7 +147,7 @@ public class ActivateActivity extends AppCompatActivity {
 
     //设备激活
     private void setActived(){
-        SharepreferencesUtils.getShareInstance().putString(ACTIVE_STATUS_KEY,"1");
+        SharepreferencesUtils.getShareInstance().putString(AppConfig.ACTIVE_STATUS_KEY,"1");
     }
 
     private void onClickWify(){

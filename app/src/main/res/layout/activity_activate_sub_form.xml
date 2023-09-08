@@ -37,6 +37,7 @@
              android:id="@+id/device_id"
              android:enabled="false"
              android:hint="设备编号"
+             android:textColor="@color/black"
              android:paddingLeft="20dp"
              android:background="@drawable/bg_text_edit"
              android:layout_width="330dp"
@@ -59,6 +60,7 @@
          <EditText
              android:id="@+id/et_wifi"
              android:hint="连接WIFI"
+             android:textColor="@color/black"
              android:enabled="false"
              android:paddingLeft="20dp"
              android:background="@drawable/bg_text_edit"
@@ -89,6 +91,7 @@
          <EditText
              android:id="@+id/et_loaction"
              android:hint="输入酒店位置"
+             android:textColor="@color/black"
              android:paddingLeft="20dp"
              android:background="@drawable/bg_text_edit"
              android:layout_width="330dp"
@@ -110,6 +113,7 @@
          <EditText
              android:id="@+id/et_room_id"
              android:hint="输入客房号"
+             android:textColor="@color/black"
              android:paddingLeft="20dp"
              android:background="@drawable/bg_text_edit"
              android:layout_width="330dp"
@@ -131,6 +135,7 @@
          <EditText
              android:id="@+id/et_name"
              android:hint="输入维护人姓名"
+             android:textColor="@color/black"
              android:paddingLeft="20dp"
              android:background="@drawable/bg_text_edit"
              android:layout_width="330dp"

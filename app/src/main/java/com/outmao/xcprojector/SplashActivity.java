@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.outmao.xcprojector.api.HttpApiService;
 import com.outmao.xcprojector.api.models.SlideListData;
+import com.outmao.xcprojector.config.AppConfig;
 import com.outmao.xcprojector.databinding.ActivitySplashBinding;
 import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
@@ -23,11 +24,10 @@ import com.outmao.xcprojector.util.SharepreferencesUtils;
 
 public class SplashActivity extends AppCompatActivity {
 
-    //设备激活状态KEY
-    private static final String ACTIVE_STATUS_KEY="ACTIVE_STATUS";
+
     //设备是否激活
     private boolean isActived(){
-        return SharepreferencesUtils.getShareInstance().getString(ACTIVE_STATUS_KEY)!=null;
+        return SharepreferencesUtils.getShareInstance().getString(AppConfig.ACTIVE_STATUS_KEY)!=null;
     }
 
     private boolean first=true;
@@ -59,17 +59,17 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 goMain();
-//                if(!isActived()){
-//                    goActivate();
-//                }else{
-//                    goMain();
-//                }
+                if(!isActived()){
+                    goActivate();
+                }else{
+                    goMain();
+                }
                 first=false;
             }
         }, 1500);
 
         //测试接口
-        this.api_test_slide_list();
+        //this.api_test_slide_list();
        // this.getLocation();
 
     }
@@ -180,5 +180,7 @@ public class SplashActivity extends AppCompatActivity {
         intent.setDataAndType(uri,type);
         startActivity(intent);
     }
+
+
 
 }

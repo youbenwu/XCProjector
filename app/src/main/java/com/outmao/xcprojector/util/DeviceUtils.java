@@ -12,7 +12,7 @@ import java.util.UUID;
 public class DeviceUtils {
 
     public static String getUUID(){
-        String imei=SharepreferencesUtils.getShareInstance().getString(AppConfig.IMEI_KEY);
+        String imei=SharepreferencesUtils.getShareInstance().getString(AppConfig.UUID_KEY);
         if(imei==null) {
             //imei = getIMEI();
             if (imei == null || imei.length() == 0) {
@@ -21,10 +21,10 @@ public class DeviceUtils {
             if (imei == null || imei.length() == 0) {
                 imei = UUID.randomUUID().toString();
             }
-            SharepreferencesUtils.getShareInstance().putString(AppConfig.IMEI_KEY,imei);
+            SharepreferencesUtils.getShareInstance().putString(AppConfig.UUID_KEY,imei);
         }
         //return "MSH-CHCH-01 ";
-        return imei;
+        return imei+"_"+AppConfig.v;
     }
 
     public static String getIMEI() {

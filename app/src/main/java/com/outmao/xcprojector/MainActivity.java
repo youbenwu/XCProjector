@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -18,14 +19,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.outmao.xcprojector.api.HttpApiService;
 import com.outmao.xcprojector.api.models.SlideListData;
 import com.outmao.xcprojector.api.models.AccountStatusData;
+import com.outmao.xcprojector.config.AppConfig;
 import com.outmao.xcprojector.databinding.ActivityMainBinding;
 import com.outmao.xcprojector.fragment.HomeFragment;
 import com.outmao.xcprojector.fragment.VideoFragment;
 import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
-import com.shuyu.gsyvideoplayer.utils.GSYVideoHelper;
 import com.outmao.xcprojector.util.SharepreferencesUtils;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         checkState();
 
         replaceFragment(homeFragment);
+        goqiyi();
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -236,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void checkNewPwd(){
-        String pwd=SharepreferencesUtils.getShareInstance().getString("pwd1");
+        String pwd=SharepreferencesUtils.getShareInstance().getString(AppConfig.PWD);
         if(pwd==null){
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             final AlertDialog dialog = builder.create();
@@ -292,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                                     Log.d("接口返回", responseData.toString());
                                     if(responseData.isSuccess()){
                                         dialog.cancel();
-                                        SharepreferencesUtils.getShareInstance().putString("pwd1",pwd);
+                                        SharepreferencesUtils.getShareInstance().putString(AppConfig.PWD,pwd);
                                         checkPwd();
                                     }else{
                                         Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
@@ -379,5 +380,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void goqiyi(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent=MainActivity.this.getPackageManager().getLaunchIntentForPackage("com.qiyi.video");
+                if (intent != null) {
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            }
+        }, 1500);
+
+    }
 
 }
