@@ -35,9 +35,9 @@ public class HttpApiService {
                                                              String city,
                                                              String area,
                                                              String longitude,
-                                                             String latitude) {
+                                                             String latitude,String device_sn) {
         HttpApiServiceInterface api = YYHttpCreator.createService(HttpApiServiceInterface.class);
-        Observable<YYResponseData<Object>> result = api.account_active(location,room_sn,repair_name,province,city,area,longitude,latitude);
+        Observable<YYResponseData<Object>> result = api.account_active(location,room_sn,repair_name,province,city,area,longitude,latitude,device_sn);
         return ObservableHelper.subscribeOn(result);
     }
 

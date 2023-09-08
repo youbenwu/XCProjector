@@ -3,48 +3,180 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
    <LinearLayout
-       android:background="@mipmap/ic_activate_from_bg"
+       android:background="@drawable/bg_activate_form"
        android:layout_alignParentRight="true"
-       android:layout_alignParentBottom="true"
-       android:layout_marginRight="80dp"
+       android:layout_marginRight="120dp"
+       android:layout_marginTop="70dp"
        android:orientation="vertical"
-       android:layout_width="640dp"
-       android:layout_height="916dp">
+       android:layout_width="427dp"
+       android:layout_height="609dp">
 
       <TextView
           android:id="@+id/title"
           android:text=" Welcome you"
           android:textColor="@color/white"
-          android:textSize="50sp"
-          android:layout_marginLeft="70dp"
-          android:layout_marginTop="80dp"
+          android:textSize="33sp"
+          android:layout_marginLeft="47dp"
+          android:layout_marginTop="28dp"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
       <TextView
           android:text="设备编号"
-          android:textSize="20sp"
+          android:textSize="13sp"
           android:textColor="@color/white"
-          android:layout_marginTop="50dp"
-          android:layout_marginLeft="100dp"
+          android:layout_marginTop="23dp"
+          android:layout_marginLeft="66dp"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
-      <EditText
-          android:id="@+id/device_id"
-          android:hint="设备编号"
-          android:paddingLeft="20dp"
-          android:layout_marginLeft="80dp"
-          android:layout_marginTop="20dp"
-          android:background="@drawable/bg_round_ffffffff"
-          android:layout_width="480dp"
-          android:layout_height="64dp"/>
+      <RelativeLayout
+          android:layout_marginLeft="49dp"
+          android:layout_marginTop="3dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+         <EditText
+             android:id="@+id/device_id"
+             android:enabled="false"
+             android:hint="设备编号"
+             android:paddingLeft="20dp"
+             android:background="@drawable/bg_text_edit"
+             android:layout_width="330dp"
+             android:layout_height="52dp"/>
+      </RelativeLayout>
+
+      <TextView
+          android:text="WIFI连接"
+          android:textSize="13sp"
+          android:textColor="@color/white"
+          android:layout_marginTop="9dp"
+          android:layout_marginLeft="66dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <RelativeLayout
+          android:layout_marginLeft="49dp"
+          android:layout_marginTop="3dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+         <EditText
+             android:id="@+id/et_wifi"
+             android:hint="连接WIFI"
+             android:enabled="false"
+             android:paddingLeft="20dp"
+             android:background="@drawable/bg_text_edit"
+             android:layout_width="330dp"
+             android:layout_height="52dp"/>
+         <TextView
+             android:id="@+id/tv_wify"
+             android:focusable="true"
+             android:background="@drawable/bg_text_view_wift"
+             android:layout_width="330dp"
+             android:layout_height="52dp"/>
+
+      </RelativeLayout>
+
+      <TextView
+          android:text="酒店投放定位"
+          android:textSize="13sp"
+          android:textColor="@color/white"
+          android:layout_marginTop="9dp"
+          android:layout_marginLeft="66dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <RelativeLayout
+          android:layout_marginLeft="49dp"
+          android:layout_marginTop="3dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+         <EditText
+             android:id="@+id/et_loaction"
+             android:hint="输入酒店位置"
+             android:paddingLeft="20dp"
+             android:background="@drawable/bg_text_edit"
+             android:layout_width="330dp"
+             android:layout_height="52dp"/>
+      </RelativeLayout>
+      <TextView
+          android:text="投放客房号"
+          android:textSize="13sp"
+          android:textColor="@color/white"
+          android:layout_marginTop="9dp"
+          android:layout_marginLeft="66dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <RelativeLayout
+          android:layout_marginLeft="49dp"
+          android:layout_marginTop="3dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+         <EditText
+             android:id="@+id/et_room_id"
+             android:hint="输入客房号"
+             android:paddingLeft="20dp"
+             android:background="@drawable/bg_text_edit"
+             android:layout_width="330dp"
+             android:layout_height="52dp"/>
+      </RelativeLayout>
+      <TextView
+          android:text="维护人姓名"
+          android:textSize="13sp"
+          android:textColor="@color/white"
+          android:layout_marginTop="9dp"
+          android:layout_marginLeft="66dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <RelativeLayout
+          android:layout_marginLeft="49dp"
+          android:layout_marginTop="3dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+         <EditText
+             android:id="@+id/et_name"
+             android:hint="输入维护人姓名"
+             android:paddingLeft="20dp"
+             android:background="@drawable/bg_text_edit"
+             android:layout_width="330dp"
+             android:layout_height="52dp"/>
+      </RelativeLayout>
+
+      <TextView
+          android:id="@+id/btn_active"
+          android:text="马上激活"
+          android:focusable="true"
+          android:gravity="center"
+          android:textColor="@color/white"
+          android:textSize="13sp"
+          android:layout_gravity="center_horizontal"
+          android:background="@drawable/bg_button_black"
+          android:layout_marginTop="30dp"
+          android:layout_width="266dp"
+          android:layout_height="33dp"/>
+
+      <LinearLayout
+          android:layout_marginTop="12dp"
+          android:layout_gravity="center"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+         <TextView
+             android:text="喵影互娱在任何场合下都不会泄露您的任何信息/如果遇到问题 "
+             android:textColor="@color/white"
+             android:textSize="9sp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+         <TextView
+             android:text="请点击此处"
+             android:textColor="@color/black"
+             android:textSize="9sp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+      </LinearLayout>
+
       
    </LinearLayout>
    <ImageView
        android:layout_alignParentRight="true"
        android:layout_alignParentBottom="true"
        android:src="@mipmap/ic_activate_user"
-       android:layout_marginRight="100dp"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"/>
+       android:layout_marginRight="40dp"
+       android:layout_width="100dp"
+       android:layout_height="290dp"/>
 
 </RelativeLayout>

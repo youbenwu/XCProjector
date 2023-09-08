@@ -14,7 +14,7 @@ public class DeviceUtils {
     public static String getUUID(){
         String imei=SharepreferencesUtils.getShareInstance().getString(AppConfig.IMEI_KEY);
         if(imei==null) {
-            imei = getIMEI();
+            //imei = getIMEI();
             if (imei == null || imei.length() == 0) {
                 imei = getAndroidId();
             }
@@ -23,6 +23,7 @@ public class DeviceUtils {
             }
             SharepreferencesUtils.getShareInstance().putString(AppConfig.IMEI_KEY,imei);
         }
+        //return "MSH-CHCH-01 ";
         return imei;
     }
 

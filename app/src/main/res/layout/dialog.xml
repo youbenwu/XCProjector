@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="578dp"
+    android:layout_height="400dp"
+    android:orientation="vertical"
+    android:background="@mipmap/dialog_bg">
+
+   <RelativeLayout
+       android:background="@mipmap/dialog_bg_top"
+       android:layout_width="match_parent"
+       android:layout_height="75dp">
+
+       <TextView
+           android:id="@+id/tv_title"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+           android:text="title"
+           android:textColor="@color/white"
+           android:textSize="33sp" />
+
+       <TextView
+           android:id="@+id/tv_close"
+           android:focusable="true"
+           android:layout_marginRight="8dp"
+           android:layout_centerVertical="true"
+           android:layout_alignParentRight="true"
+           android:background="@drawable/bg_button_close"
+           android:layout_width="48dp"
+           android:layout_height="48dp"/>
+
+   </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <ImageView
+            android:id="@+id/iv_lock"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="66dp"
+            android:src="@mipmap/ic_lock"
+            android:layout_width="64dp"
+            android:layout_height="64dp"/>
+        <LinearLayout
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="22dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="49dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_msg"
+                android:text="欢迎你使用喵影互娱"
+                android:textColor="#FCE561"
+                android:textSize="33sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_sub_msg"
+                android:layout_marginTop="6dp"
+                android:text="为了你的安全使用\n请先设定您的“设置”新密码"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_pwd"
+        android:hint="请输入您的密码"
+        android:paddingLeft="10dp"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="22dp"
+        android:background="@mipmap/dialog_edit_bg"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"/>
+
+    <LinearLayout
+        android:id="@+id/iv_buttons"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:text="取消"
+            android:focusable="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:background="@drawable/bg_button2_dialog"
+            android:layout_marginRight="15dp"
+            android:layout_width="126dp"
+            android:layout_height="54dp"/>
+
+        <TextView
+            android:id="@+id/btn_ok"
+            android:text="提交密码"
+            android:focusable="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:background="@drawable/bg_button_dialog"
+            android:layout_width="204dp"
+            android:layout_height="54dp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:src="@mipmap/dialog_bg_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"/>
+
+</LinearLayout>

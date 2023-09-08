@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_marginTop="198dp"
+    android:layout_marginLeft="97dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+      <TextView
+          android:text="人工免费激活系统"
+          android:textSize="46sp"
+          android:textColor="@color/white"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+      <ImageView
+          android:layout_marginLeft="18dp"
+          android:src="@mipmap/ic_activate_u"
+          android:layout_width="66dp"
+          android:layout_height="66dp"/>
+   </LinearLayout>
+
+
+   <LinearLayout
+       android:layout_marginTop="86dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+
+      <ImageView
+          android:src="@mipmap/ic_activate_c"
+          android:layout_marginRight="3dp"
+          android:layout_width="22dp"
+          android:layout_height="30dp"/>
+      <TextView
+          android:text="10+行业的数据转型及智慧运营解决方案"
+          android:textSize="20sp"
+          android:textColor="@color/white"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+   </LinearLayout>
+   <LinearLayout
+       android:layout_marginTop="54dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+      <ImageView
+          android:src="@mipmap/ic_activate_c"
+          android:layout_marginRight="3dp"
+          android:layout_width="22dp"
+          android:layout_height="30dp"/>
+      <TextView
+          android:text="超过500小时的工具应用、业务分析等视频学习资源"
+          android:textSize="20sp"
+          android:textColor="@color/white"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+   </LinearLayout>
+   <LinearLayout
+       android:layout_marginTop="54dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+      <ImageView
+          android:src="@mipmap/ic_activate_c"
+          android:layout_marginRight="3dp"
+          android:layout_width="22dp"
+          android:layout_height="30dp"/>
+      <TextView
+          android:text="10+行业的数据转型及智慧运营解决方案"
+          android:textSize="20sp"
+          android:textColor="@color/white"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+   </LinearLayout>
+
+</LinearLayout>

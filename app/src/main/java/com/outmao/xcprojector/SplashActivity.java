@@ -43,10 +43,8 @@ public class SplashActivity extends AppCompatActivity {
     private boolean isActived(){
         return SharepreferencesUtils.getShareInstance().getString(ACTIVE_STATUS_KEY)!=null;
     }
-    //设备激活
-    private void setActived(){
-        SharepreferencesUtils.getShareInstance().putString(ACTIVE_STATUS_KEY,"1");
-    }
+
+    private boolean first=true;
 
     private ActivitySplashBinding binding;
 
@@ -57,6 +55,19 @@ public class SplashActivity extends AppCompatActivity {
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!first){
+                    if(!isActived()){
+                        goActivate();
+                    }else{
+                        goMain();
+                    }
+                }
+            }
+        });
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -66,13 +77,19 @@ public class SplashActivity extends AppCompatActivity {
                 }else{
                     goMain();
                 }
+                first=false;
             }
         }, 1500);
 
         //测试接口
-        this.api_test_slide_list();
+        //this.api_test_slide_list();
        // this.getLocation();
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 
     //去激活设备
@@ -117,52 +134,52 @@ public class SplashActivity extends AppCompatActivity {
 
 
     //获取省市区
-    private void getLocation() {
-        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},0);
-            return;
-        }
-        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    Geocoder geocoder = new Geocoder(SplashActivity.this, Locale.getDefault());
-                    try {
-                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        if (addresses != null && addresses.size() > 0) {
-                            Log.d("addresses",addresses.toString());
-                            String city = addresses.get(0).getLocality();
-                            // 在这里处理获取到的城市信息
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).addOnFailureListener(this, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
-        switch (requestCode) {
-            case 0: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 权限被用户同意。
-                    getLocation();
-                } else {
-                    // 权限被用户拒绝了。
-                }
-                return;
-            }
-        }
-    }
+//    private void getLocation() {
+//        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},0);
+//            return;
+//        }
+//        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//            @Override
+//            public void onSuccess(Location location) {
+//                if (location != null) {
+//                    Geocoder geocoder = new Geocoder(SplashActivity.this, Locale.getDefault());
+//                    try {
+//                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+//                        if (addresses != null && addresses.size() > 0) {
+//                            Log.d("addresses",addresses.toString());
+//                            String city = addresses.get(0).getLocality();
+//                            // 在这里处理获取到的城市信息
+//                        }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }).addOnFailureListener(this, new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+//        switch (requestCode) {
+//            case 0: {
+//                if (grantResults.length > 0
+//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // 权限被用户同意。
+//                    getLocation();
+//                } else {
+//                    // 权限被用户拒绝了。
+//                }
+//                return;
+//            }
+//        }
+//    }
 
 }

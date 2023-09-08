@@ -1,0 +1,26 @@
+别名: kytest
+创建日期: 2023-9-8
+条目类型: PrivateKeyEntry
+证书链长度: 1
+证书[1]:
+所有者: CN=you, OU=you, O=you, L=you, ST=you, C=you
+发布者: CN=you, OU=you, O=you, L=you, ST=you, C=you
+序列号: 4b08d391
+有效期为 Fri Sep 08 14:39:40 CST 2023 至 Sun Aug 15 14:39:40 CST 2123
+证书指纹:
+	 MD5:  73:71:29:0A:5C:B3:8A:2C:5D:80:62:C0:02:9A:B0:2E
+	 SHA1: 96:DB:87:BD:42:A8:F4:05:6D:2A:BE:8A:4C:80:77:84:7A:E1:EF:24
+	 SHA256: F2:F5:F4:73:DA:3F:3C:CF:82:A7:F0:78:63:94:3B:95:79:ED:C2:84:F4:E6:CF:C5:10:FB:C9:59:24:CC:BC:A5
+签名算法名称: SHA256withRSA
+主体公共密钥算法: 2048 位 RSA 密钥
+版本: 3
+
+扩展:
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 40 21 92 B6 ED E8 D2 3A   27 65 FF 76 12 BA 93 A7  @!.....:'e.v....
+0010: 89 7A FC 6E                                        .z.n
+]
+]

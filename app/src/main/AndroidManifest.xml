@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="internalOnly">
 
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <application
         android:name=".config.MyApplication"
         android:allowBackup="true"
@@ -11,15 +10,23 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.XCProjector"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:targetApi="31">
+        <activity
+            android:name=".ActivateFailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.XCProjector.NoActionBar.Fullscreen"/>
+        <activity
+            android:name=".ActivateSuccessActivity"
+            android:exported="false"
+            android:theme="@style/Theme.XCProjector.NoActionBar.Fullscreen"/>
         <activity
             android:name=".ActivateActivity"
             android:exported="false"
             android:label="@string/title_activity_activate"
-            android:theme="@style/Theme.XCProjector.NoActionBar" />
+            android:theme="@style/Theme.XCProjector.NoActionBar.Fullscreen" />
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -39,18 +46,18 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.XCProjector.NoActionBar"></activity>
+            android:theme="@style/Theme.XCProjector.NoActionBar" />
     </application>
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

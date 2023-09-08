@@ -27,7 +27,8 @@ public interface HttpApiServiceInterface {
                                                              @Field("city")String city,
                                                              @Field("area")String area,
                                                              @Field("longitude")String longitude,
-                                                             @Field("latitude")String latitude);
+                                                             @Field("latitude")String latitude,
+                                                             @Field("device_sn")String device_sn);
 
  //设备状态
 
