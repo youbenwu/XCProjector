@@ -15,7 +15,8 @@ public interface HttpApiServiceInterface {
 
    //广告列表
     @GET(HttpApiServiceUrl.SLIDE_LIST)
-    Observable<YYResponseData<SlideListData>> slide_list();
+    Observable<YYResponseData<SlideListData>> slide_list(@Query("page") int page,
+                                                         @Query("limit") int limit);
 
     //激活
     @FormUrlEncoded

@@ -67,7 +67,7 @@ public class SplashActivity extends AppCompatActivity {
         }, 1500);
 
         //测试接口
-        //this.api_test_slide_list();
+        this.api_test_slide_list();
        // this.getLocation();
 
     }
@@ -98,7 +98,9 @@ public class SplashActivity extends AppCompatActivity {
 
     //广告列表
     private void api_test_slide_list() {
-        HttpApiService.getInstance().slide_list()
+        int page=1;
+        int limit=5;
+        HttpApiService.getInstance().slide_list(1,5)
                 .subscribe(new RxSubscriber<YYResponseData<SlideListData>>() {
                     @Override
                     public void onFail(YYResponseData<SlideListData> responseData) {

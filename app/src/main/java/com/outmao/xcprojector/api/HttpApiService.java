@@ -21,9 +21,9 @@ public class HttpApiService {
         return httpApiService;
     }
 
-    public Observable<YYResponseData<SlideListData>> slide_list() {
+    public Observable<YYResponseData<SlideListData>> slide_list(int page,int limit) {
         HttpApiServiceInterface api = YYHttpCreator.createService(HttpApiServiceInterface.class);
-        Observable<YYResponseData<SlideListData>> result = api.slide_list();
+        Observable<YYResponseData<SlideListData>> result = api.slide_list(page,limit);
         return ObservableHelper.subscribeOn(result);
     }
 
