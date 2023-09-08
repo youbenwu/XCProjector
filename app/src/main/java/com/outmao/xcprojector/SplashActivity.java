@@ -1,28 +1,16 @@
 package com.outmao.xcprojector;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.os.Build;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowInsets;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.outmao.xcprojector.api.HttpApiService;
 import com.outmao.xcprojector.api.models.SlideListData;
 import com.outmao.xcprojector.databinding.ActivitySplashBinding;
@@ -30,9 +18,6 @@ import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
 import com.outmao.xcprojector.util.SharepreferencesUtils;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 
 public class SplashActivity extends AppCompatActivity {
