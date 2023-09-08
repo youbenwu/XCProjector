@@ -59,11 +59,11 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 goMain();
-                if(!isActived()){
-                    goActivate();
-                }else{
-                    goMain();
-                }
+//                if(!isActived()){
+//                    goActivate();
+//                }else{
+//                    goMain();
+//                }
                 first=false;
             }
         }, 1500);

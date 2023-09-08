@@ -3,7 +3,7 @@ package com.outmao.xcprojector.config;
 
 public class AppConfig {
 
-    public static final int v=0;
+    public static final int v=1;
 
     public static final String IMEI_KEY ="device_sn";
 

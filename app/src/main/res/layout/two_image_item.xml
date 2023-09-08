@@ -3,6 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_marginStart="@dimen/fab_margin"
+    android:layout_marginEnd="20dp"
+
     app:flow_verticalAlign="center"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -29,6 +31,9 @@
         android:src="@drawable/test"
         app:riv_corner_radius="@dimen/image_radius_xl"
         app:riv_border_width="@dimen/border_width"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/fg_image"
         app:riv_border_color="@color/light_blue_900"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +49,9 @@
         android:layout_marginTop="11dp"
         app:riv_corner_radius="@dimen/image_radius_xl"
         app:riv_border_width="@dimen/border_width"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/fg_image"
         app:riv_border_color="@color/light_blue_900"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -66,6 +66,22 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         videoFragment = new VideoFragment();
 
+        // 影视按钮
+        View n = findViewById(R.id.menu_down);
+        n.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new VideoFragment());
+            }
+        });
+
+        View u = findViewById(R.id.menu_up);
+        u.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new HomeFragment());
+            }
+        });
 
         // 影视按钮
         View tvVideo = findViewById(R.id.home_video_view);
@@ -90,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
         tvSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Settings.ACTION_SETTINGS));
+                onClickSetting();
+                ///startActivity(new Intent(Settings.ACTION_SETTINGS));
             }
         });
 
@@ -394,5 +411,6 @@ public class MainActivity extends AppCompatActivity {
         }, 1500);
 
     }
+
 
 }

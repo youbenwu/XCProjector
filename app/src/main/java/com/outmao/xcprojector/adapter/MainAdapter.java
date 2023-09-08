@@ -2,8 +2,11 @@ package com.outmao.xcprojector.adapter;
 
 import static android.content.ContentValues.TAG;
 
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.outmao.xcprojector.R;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /***
@@ -64,7 +66,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 //                    final String url = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 //                    gsySmallVideoHelperBuilder.setVideoTitle("title " + position)
 //                            .setUrl(url);
-                    smallVideoHelper.startPlay();
+                    // smallVideoHelper.startPlay();
+                    String url = "http://tengdamy.cn/video/video2.mp4";
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    String type = "video/*";
+                    Uri uri = Uri.parse(url);
+                    intent.setDataAndType(uri,type);
+                    mContext.startActivity(intent);
                 }
             });
         }
@@ -72,7 +81,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public int getItemViewType(int position) {
-        if(position == 0) {
+        if(position == 0 || position == 2) {
             return TYPE_VIDEO_ITEM;
         } else if(position==1){
             return TYPE_IMAGE_ITEM;
@@ -84,7 +93,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return 6;
+        return 4;
     }
 
     public void setData(List<Integer> list) {
@@ -98,6 +107,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public MainItemViewHolder(@NonNull View itemView) {
             super(itemView);
             // tv = itemView.findViewById(R.id.recycler_item_test);
+            //打开本地相册
+//            Intent i = new Intent(
+//            Intent.ACTION_PICK,
+//            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//            //设定结果返回
+//            startActivityForResult(i, RESULT_LOAD_IMAGE);
         }
 
     }

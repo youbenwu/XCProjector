@@ -61,17 +61,17 @@ public class HomeFragment  extends Fragment {
         rv = view.findViewById(R.id.layout_recycler);
         rv.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         //使用通用RecyclerView组件
-        PagingScrollHelper scrollHelper = new PagingScrollHelper();//初始化横向管理器
-        scrollHelper.setUpRecycleView(rv);//将横向布局管理器和recycler view绑定到一起
-        scrollHelper.setOnPageChangeListener(new PagingScrollHelper.onPageChangeListener() {
-            @Override
-            public void onPageChange(int index) {
-            }
-        });
-        //设置滑动监听
-        scrollHelper.updateLayoutManger();
-        scrollHelper.scrollToPosition(0);//默认滑动到第一页
-        rv.setHorizontalScrollBarEnabled(true);
+//        PagingScrollHelper scrollHelper = new PagingScrollHelper();//初始化横向管理器
+//        scrollHelper.setUpRecycleView(rv);//将横向布局管理器和recycler view绑定到一起
+//        scrollHelper.setOnPageChangeListener(new PagingScrollHelper.onPageChangeListener() {
+//            @Override
+//            public void onPageChange(int index) {
+//            }
+//        });
+//        //设置滑动监听
+//        scrollHelper.updateLayoutManger();
+//        scrollHelper.scrollToPosition(0);//默认滑动到第一页
+//        rv.setHorizontalScrollBarEnabled(true);
 
         rv.setAdapter(new MainAdapter(smallVideoHelper));
     }
@@ -104,37 +104,37 @@ public class HomeFragment  extends Fragment {
                 });
     }
 
-    private void initPlayer() {
-        //创建小窗口帮助类
-        smallVideoHelper = new GSYVideoHelper(getActivity());
-        //配置
-        gsySmallVideoHelperBuilder = new GSYVideoHelper.GSYVideoHelperBuilder();
-        gsySmallVideoHelperBuilder
-                .setHideStatusBar(true)
-                .setNeedLockFull(true)
-                .setCacheWithPlay(true)
-                .setShowFullAnimation(false)
-                .setRotateViewAuto(false)
-                .setLockLand(true)
-                .setVideoAllCallBack(new GSYSampleCallBack() {
-                    @Override
-                    public void onQuitSmallWidget(String url, Object... objects) {
-                        super.onQuitSmallWidget(url, objects);
-                        smallVideoHelper.releaseVideoPlayer();
-                    }
-                });
-
-        smallVideoHelper.setGsyVideoOptionBuilder(gsySmallVideoHelperBuilder);
-    }
+//    private void initPlayer() {
+//        //创建小窗口帮助类
+//        smallVideoHelper = new GSYVideoHelper(getActivity());
+//        //配置
+//        gsySmallVideoHelperBuilder = new GSYVideoHelper.GSYVideoHelperBuilder();
+//        gsySmallVideoHelperBuilder
+//                .setHideStatusBar(true)
+//                .setNeedLockFull(true)
+//                .setCacheWithPlay(true)
+//                .setShowFullAnimation(false)
+//                .setRotateViewAuto(false)
+//                .setLockLand(true)
+//                .setVideoAllCallBack(new GSYSampleCallBack() {
+//                    @Override
+//                    public void onQuitSmallWidget(String url, Object... objects) {
+//                        super.onQuitSmallWidget(url, objects);
+//                        smallVideoHelper.releaseVideoPlayer();
+//                    }
+//                });
+//
+//        smallVideoHelper.setGsyVideoOptionBuilder(gsySmallVideoHelperBuilder);
+//    }
 
     /*if (smallVideoHelper.backFromFull()) {
         return;
     }*/
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        smallVideoHelper.releaseVideoPlayer();
-        GSYVideoManager.releaseAllVideos();
-    }
+    // @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        smallVideoHelper.releaseVideoPlayer();
+//        GSYVideoManager.releaseAllVideos();
+//    }
 }
