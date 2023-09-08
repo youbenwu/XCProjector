@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    app:flow_verticalAlign="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/video_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/video_bg"
+    >
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/video_player_view"
+            android:layout_width="@dimen/video_width"
+            android:layout_height="@dimen/video_height"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test"
+            android:background="@drawable/video_bg"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_player_bg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_player"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/image_left"
+        android:layout_width="@dimen/image_width_s"
+        android:layout_height="@dimen/image_height_s"
+        android:scaleType="centerCrop"
+        android:src="@drawable/transpant"
+        android:clickable="true"
+        android:focusable="true"
+        app:riv_border_width="@dimen/border_width_2"
+        app:riv_border_color="@color/border_color"
+        android:layout_marginTop="@dimen/fab_margin_x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video_view"
+    />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/image_medium"
+        android:layout_width="@dimen/image_width_s"
+        android:layout_height="@dimen/image_height_s"
+        android:scaleType="centerCrop"
+        android:src="@drawable/transpant"
+        android:clickable="true"
+        android:focusable="true"
+        app:riv_border_width="@dimen/border_width_2"
+        app:riv_border_color="@color/border_color"
+        app:layout_constraintStart_toEndOf="@+id/image_left"
+        app:layout_constraintEnd_toStartOf="@+id/image_right"
+        app:layout_constraintTop_toTopOf="@+id/image_left"
+        app:layout_constraintBottom_toBottomOf="@+id/image_left"
+    />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/image_right"
+        android:layout_width="@dimen/image_width_s"
+        android:layout_height="@dimen/image_height_s"
+        android:scaleType="centerCrop"
+        android:src="@drawable/transpant"
+        app:riv_border_width="@dimen/border_width_2"
+        app:riv_border_color="@color/border_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_left"
+        app:layout_constraintBottom_toBottomOf="@+id/image_left"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

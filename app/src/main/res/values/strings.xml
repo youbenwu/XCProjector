@@ -15,5 +15,20 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_activate">ActivateActivity</string>
 
+    <string name="main_center_location_text">广州</string>
+    <string name="main_center_title">欢迎使用喵影互娱</string>
+    <string name="main_cast_screen">投屏互动</string>
+
+    <string name="nav_settings">设置</string>
+    <string name="nav_settings_en">SETUP</string>
+    <string name="nav_home">首页</string>
+    <string name="nav_home_en">HOME</string>
+    <string name="nav_video">影视</string>
+    <string name="nav_video_movies">MOVIES</string>
+
+    <string name="video_banner_trips">温馨提示: 请选择您需要的菜单功能</string>
+
+    <string name="qrcode_text">关注app更多服务</string>
+
 
 </resources>

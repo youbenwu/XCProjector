@@ -1,3 +1,36 @@
 <resources>
+    <dimen name="fab_margin_xs">8dp</dimen>
+    <dimen name="fab_margin_12">12dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_margin_x">20dp</dimen>
+    <dimen name="fab_margin_22">22dp</dimen>
+    <dimen name="fab_margin_30">30dp</dimen>
+    <dimen name="fab_margin_m">24dp</dimen>
+    <dimen name="fab_margin_l">28dp</dimen>
+    <dimen name="fab_margin_xl">40dp</dimen>
+
+    <dimen name="normal_text_size">18sp</dimen>
+    <dimen name="normal_text_size_xxs">12sp</dimen>
+    <dimen name="normal_text_size_xs">14sp</dimen>
+    <dimen name="normal_text_size_s">16sp</dimen>
+    <dimen name="normal_text_size_m">20sp</dimen>
+    <dimen name="normal_text_size_l">22sp</dimen>
+
+
+    <dimen name="video_width">428dp</dimen>
+    <dimen name="video_height">264dp</dimen>
+
+    <dimen name="image_width_s">131dp</dimen>
+    <dimen name="image_height_s">167dp</dimen>
+
+    <dimen name="image_width_m">352dp</dimen>
+    <dimen name="image_height_m">225dp</dimen>
+
+    <dimen name="image_radius_s">4dp</dimen>
+    <dimen name="image_radius_m">8dp</dimen>
+    <dimen name="image_radius_l">12dp</dimen>
+    <dimen name="image_radius_xl">16dp</dimen>
+
+    <dimen name="border_width">1dp</dimen>
+    <dimen name="border_width_2">2dp</dimen>
 </resources>

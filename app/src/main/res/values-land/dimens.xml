@@ -1,3 +1,7 @@
 <resources>
-    <dimen name="fab_margin">48dp</dimen>
+<!--    <dimen name="fab_margin">48dp</dimen>-->
+<!--    <dimen name="fab_margin_xs">16dp</dimen>-->
+<!--    <dimen name="fab_margin_x">48dp</dimen>-->
+<!--    <dimen name="fab_margin_m">52dp</dimen>-->
+<!--    <dimen name="fab_margin_l">56dp</dimen>-->
 </resources>

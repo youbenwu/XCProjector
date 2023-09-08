@@ -3,8 +3,6 @@ package com.outmao.xcprojector;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,29 +10,36 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.outmao.xcprojector.api.HttpApiService;
-import com.outmao.xcprojector.api.models.AccountStatusData;
 import com.outmao.xcprojector.api.models.SlideListData;
+import com.outmao.xcprojector.api.models.AccountStatusData;
 import com.outmao.xcprojector.databinding.ActivityMainBinding;
+import com.outmao.xcprojector.fragment.HomeFragment;
+import com.outmao.xcprojector.fragment.VideoFragment;
 import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
+import com.shuyu.gsyvideoplayer.utils.GSYVideoHelper;
 import com.outmao.xcprojector.util.SharepreferencesUtils;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+    private HomeFragment homeFragment;
+    private VideoFragment videoFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,19 +48,57 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        initNavButton();
         checkState();
 
-        setSupportActionBar(binding.toolbar);
+        replaceFragment(homeFragment);
+    }
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.home_content_view, fragment);
+        transaction.commit();
+    }
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+    private void initNavButton() {
+        homeFragment = new HomeFragment();
+        videoFragment = new VideoFragment();
+
+
+        // 影视按钮
+        View tvVideo = findViewById(R.id.home_video_view);
+        tvVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                replaceFragment(new VideoFragment());
+            }
+        });
+
+        // 首页按钮
+        View tvHome = findViewById(R.id.home_nav_home_view);
+        tvHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new HomeFragment());
+            }
+        });
+
+        // 设置按钮
+        View tvSettings = findViewById(R.id.home_settings_view);
+        tvSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Settings.ACTION_SETTINGS));
+            }
+        });
+
+        // 翻页按钮
+        View nextPage = findViewById(R.id.btn_next_page);
+        nextPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
@@ -82,14 +125,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
 
 
     private void onClickSetting(){
