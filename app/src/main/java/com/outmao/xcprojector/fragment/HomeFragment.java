@@ -80,7 +80,7 @@ public class HomeFragment  extends Fragment {
      * 获取首页数据
      */
     private void getSlideData() {
-        HttpApiService.getInstance().slide_list()
+        HttpApiService.getInstance().slide_list(0, 1)
                 .subscribe(new RxSubscriber<YYResponseData<SlideListData>>() {
                     @Override
                     public void onFail(YYResponseData<SlideListData> responseData) {
