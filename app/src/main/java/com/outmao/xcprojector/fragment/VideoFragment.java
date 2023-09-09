@@ -4,11 +4,14 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.outmao.xcprojector.R;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /***
  * @Author : Cheng
@@ -44,38 +49,106 @@ public class VideoFragment  extends Fragment {
         view.findViewById(R.id.image_aiqiyi).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent();
-//                Log.d("test: ", "com.");
-//                ComponentName cn = new ComponentName("com.dangbeimarket", getActivity().getPackageName());
-//                try {
-//                    Log.d("test: ", "com.t");
-//                    intent.setComponent(cn);
-//                    getActivity().startActivity(intent);
-//                } catch(Exception e) {
-//                    Log.d("test: ", "com.e");
-//                }
-                try{
-//                    Log.d("test: ", "ss");
-//                    List<PackageInfo> packList = getActivity().getPackageManager().getInstalledPackages(0);
-//                    for (PackageInfo aa: packList) {
-//                        Log.d("test: ", aa.packageName);
-//                    }
-//                    String package_name="com.android.tv.settings";
-//                    PackageManager packageManager = getActivity().getPackageManager();
-//                    Intent it = packageManager.getLaunchIntentForPackage(package_name);
-//                    Log.d("test: ", it == null ? "true":"false");
-//                    getActivity().startActivity(it);
+                jumpToOtherApplication(OTHER_APPLICATION.QI_YI_GUO_JI_SU);
+            }
+        });
 
-                    // Android bilibili://
+        view.findViewById(R.id.image_youku).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpToOtherApplication(OTHER_APPLICATION.YOU_KU);
+            }
+        });
 
+        view.findViewById(R.id.image_tengxun).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpToOtherApplication(OTHER_APPLICATION.YUN_SHI_TING);
+            }
+        });
 
+        view.findViewById(R.id.image_douyin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpToOtherApplication(OTHER_APPLICATION.DANG_BEI_APP_STORE);
+            }
+        });
 
-                }catch(Exception e) {
-
-                }
+        view.findViewById(R.id.image_xiaohongshu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpToOtherApplication(OTHER_APPLICATION.XIAO_HONG_SHU);
             }
         });
     }
 
 
+    private void jumpToOtherApplication(OTHER_APPLICATION otherApplication) {
+        try{
+            // 获取并打印应用名及包名,需要时解除注释,不用时不打印,应用过多时耗费资源
+            PackageManager packageManager = getActivity().getPackageManager();
+            /*List<PackageInfo> packList = packageManager.getInstalledPackages(0);
+            for (PackageInfo aa: packList) {
+                Log.d("test: ", aa.applicationInfo.packageName);
+                Log.d("appinfo", packageManager.getApplicationLabel(aa.applicationInfo).toString());
+            }*/
+
+            // 包名不是Null 的时候跳转
+            if(otherApplication.getPackageName() != null) {
+                PackageInfo pi = getActivity().getPackageManager().getPackageInfo(otherApplication.getPackageName(), 0);
+
+                Intent resolveIntent = new Intent(Intent.ACTION_MAIN, null);
+                resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                resolveIntent.setPackage(pi.packageName);
+
+                List<ResolveInfo> apps = packageManager.queryIntentActivities(resolveIntent, 0);
+
+                ResolveInfo ri = apps.iterator().next();
+                if (ri != null ) {
+                    String packageName = ri.activityInfo.packageName;
+                    String className = ri.activityInfo.name;
+
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                    ComponentName cn = new ComponentName(packageName, className);
+
+                    intent.setComponent(cn);
+                    getActivity().startActivity(intent);
+                } else {
+                    // 包名是Null的时候,提示用户下载
+                    Toast.makeText(requireContext(), "暂无该应用", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        }catch(Exception e) {
+            Log.d("Function jumpToOtherApplication erro: ", Objects.requireNonNull(e.getMessage()));
+        }
+    }
+
+}
+
+/**
+ * 第三方应用的枚举
+ * 应用包名根据系统打印出来数据选择需要的写死
+ * 应用商城包名: com.dangbei.mimir.lightos.appstore
+ */
+enum OTHER_APPLICATION {
+    QI_YI_GUO_JI_SU("com.gitvjisu"),
+    YUN_SHI_TING("com.ktcp.tvvideo"),
+    YOU_KU(""),
+    XIAO_HONG_SHU(""),
+    DOU_YIN(""),
+    MANG_GUO_TV("com.starcor.mango"),
+    DANG_BEI_APP_STORE("com.dangbei.mimir.lightos.appstore");
+
+    private final String packageName;
+
+    OTHER_APPLICATION(String value) {
+        this.packageName = value;
+    }
+
+    public String getPackageName() {
+        return ("").equals(this.packageName) ? null : this.packageName;
+    }
 }

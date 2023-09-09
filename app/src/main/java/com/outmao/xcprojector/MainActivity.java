@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         checkState();
 
         replaceFragment(homeFragment);
-        goqiyi();
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         n.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(new VideoFragment());
+                replaceFragment(videoFragment);
             }
         });
 
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         u.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(new HomeFragment());
+                replaceFragment(homeFragment);
             }
         });
 
@@ -393,22 +392,6 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         });
-
-    }
-
-
-    private void goqiyi(){
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent=MainActivity.this.getPackageManager().getLaunchIntentForPackage("com.qiyi.video");
-                if (intent != null) {
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }
-            }
-        }, 1500);
 
     }
 
