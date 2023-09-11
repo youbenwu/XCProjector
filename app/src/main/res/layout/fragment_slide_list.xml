@@ -21,7 +21,31 @@
                 android:layout_marginLeft="3dp"
                 android:layout_width="608dp"
                 android:layout_height="398dp">
-                <com.outmao.xcprojector.video.VideoView
+<!--                <com.outmao.xcprojector.video.VideoView-->
+<!--                    android:id="@+id/video_view1"-->
+<!--                    android:paddingLeft="19dp"-->
+<!--                    android:paddingRight="15dp"-->
+<!--                    android:paddingTop="21dp"-->
+<!--                    android:paddingBottom="23dp"-->
+<!--                    android:focusable="true"-->
+<!--                    android:foreground="@drawable/fg_video_main"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
+
+<!--                </com.outmao.xcprojector.video.VideoView>-->
+
+
+<!--                <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer-->
+<!--                    android:id="@+id/video_view1"-->
+<!--                    android:paddingLeft="19dp"-->
+<!--                    android:paddingRight="15dp"-->
+<!--                    android:paddingTop="21dp"-->
+<!--                    android:paddingBottom="23dp"-->
+<!--                    android:focusable="true"-->
+<!--                    android:foreground="@drawable/fg_video_main"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"/>-->
+                <com.outmao.xcprojector.video.TvVideoPlayer
                     android:id="@+id/video_view1"
                     android:paddingLeft="19dp"
                     android:paddingRight="15dp"
@@ -30,8 +54,7 @@
                     android:focusable="true"
                     android:foreground="@drawable/fg_video_main"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </com.outmao.xcprojector.video.VideoView>
+                    android:layout_height="match_parent"/>
                 <ImageView
                     android:src="@drawable/ic_play_top"
                     android:layout_centerHorizontal="true"
@@ -109,8 +132,7 @@
                     android:focusable="true"
                     android:foreground="@drawable/fg_selected"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </com.outmao.xcprojector.video.VideoView>
+                    android:layout_height="match_parent" />
 
             </RelativeLayout>
             <RelativeLayout

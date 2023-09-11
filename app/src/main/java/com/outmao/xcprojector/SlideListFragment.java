@@ -8,9 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -24,7 +26,13 @@ import com.outmao.xcprojector.databinding.FragmentSlideListBinding;
 import com.outmao.xcprojector.image.ImagePagerActivity;
 import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
-import com.outmao.xcprojector.video.VideoPlayActivity;
+import com.outmao.xcprojector.video.TvVideoPlayer;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
+import com.shuyu.gsyvideoplayer.listener.LockClickListener;
+import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
+import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import java.util.ArrayList;
 
@@ -42,6 +50,14 @@ public class SlideListFragment extends Fragment {
     private int page;
 
     private SlideListData data;
+
+    private OrientationUtils orientationUtils;
+
+    TvVideoPlayer detailPlayer;
+
+    private String topVideoUrl;
+
+    private ImageView topVideoCover;
 
     public SlideListFragment() {
     }
@@ -75,7 +91,7 @@ public class SlideListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.videoView1.setDestImage(R.drawable.ic_play_mb);
+//        binding.videoView1.setDestImage(R.drawable.ic_play_mb);
         binding.videoView2.setDestImage(R.drawable.ic_play_mb2);
         binding.videoView3.setDestImage(R.drawable.ic_play_mb2);
         //Glide.with(this).load("https://qn.huwing.cn/2023/09/01/16935609583821101-1920_1080.jpg").centerCrop().into(binding.testImage);
@@ -132,7 +148,13 @@ public class SlideListFragment extends Fragment {
             //主图
             if(data.getMain_slide()!=null){
                 SlideInfo info=data.getMain_slide();
-                binding.videoView1.initData(info.getVideo_url_txt(),info.getThumbs_txt());
+//                binding.videoView1.initData(info.getVideo_url_txt(),info.getThumbs_txt());
+//                binding.videoView1.setImageViewVisible(false);
+                Log.d("VideoPlayer url: ", info.getVideo_url_txt());
+                topVideoUrl = info.getVideo_url_txt();
+                if(info.getThumbs_txt() != null && info.getThumbs_txt().size() > 0 && !("").equals(info.getThumbs_txt().get(0))) {
+                    Glide.with(this).load(info.getThumbs_txt().get(0)).centerCrop().into(topVideoCover);
+                }
                 binding.rlView1.setVisibility(View.VISIBLE);
             }
 
@@ -182,6 +204,14 @@ public class SlideListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSlideListBinding.inflate(inflater, container, false);
+
+        //视频封面ImageView
+        topVideoCover = new ImageView(getActivity());
+        topVideoCover.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        topVideoCover.setImageResource(R.drawable.aiqiyi);
+
+        detailPlayer = binding.videoView1;
+        initVideoPlayer();
         return binding.getRoot();
     }
 
@@ -217,6 +247,136 @@ public class SlideListFragment extends Fragment {
         this.data=data;
         updateData();
 
+    }
+
+    private void initVideoPlayer() {
+        String url = "http://tengdamy.cn/video/video2.mp4";
+
+        //增加title
+        detailPlayer.getTitleTextView().setVisibility(View.GONE);
+        detailPlayer.getBackButton().setVisibility(View.GONE);
+        //外部辅助的旋转，帮助全屏
+        orientationUtils = new OrientationUtils(getActivity(), detailPlayer);
+
+        GSYVideoOptionBuilder gsyVideoOption = new GSYVideoOptionBuilder();
+        gsyVideoOption
+                .setThumbImageView(topVideoCover)
+                .setIsTouchWiget(false)
+                .setRotateViewAuto(false)
+                .setLockLand(false)
+                .setAutoFullWithSize(false)
+                .setShowFullAnimation(false)
+                .setNeedLockFull(false)
+                .setCacheWithPlay(false)
+                .setVideoTitle("测试视频")
+                .setVideoAllCallBack(new GSYSampleCallBack() {
+                    @Override
+                    public void onPrepared(String url, Object... objects) {
+                        super.onPrepared(url, objects);
+                        //开始播放了才能旋转和全屏
+                        orientationUtils.setEnable(true);
+//                        isPlay = true;
+                    }
+
+                    @Override
+                    public void onClickStopFullscreen(String url, Object... objects) {
+                        super.onClickStopFullscreen(url, objects);
+                    }
+
+                    @Override
+                    public void onAutoComplete(String url, Object... objects) {
+                        super.onAutoComplete(url, objects);
+                        // 播放完成设置
+                        TvVideoPlayer.setPlayComplete(true);
+                    }
+
+                    @Override
+                    public void onQuitFullscreen(String url, Object... objects) {
+                        super.onQuitFullscreen(url, objects);
+
+//                        if (orientationUtils != null) {
+//                            orientationUtils.backToProtVideo();
+//                        }
+                    }
+                }).setLockClickListener(new LockClickListener() {
+                    @Override
+                    public void onClick(View view, boolean lock) {
+                        if (orientationUtils != null) {
+                            //配合下方的onConfigurationChanged
+                            orientationUtils.setEnable(!lock);
+                        }
+                    }
+                })
+                .build(detailPlayer);
+
+
+        detailPlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailPlayer.startWindowFullscreen(getActivity(), false, true);
+            }
+        });
+
+//        detailPlayer.getBackButton().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(onBackPressed()) {
+//
+//                };
+//            }
+//        });
+        detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //直接横屏
+                // orientationUtils.resolveByClick();
+
+                // 第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
+                detailPlayer.startWindowFullscreen(getActivity(), false, true);
+            }
+        });
+    }
+
+    /**
+     * 返回是否全屏
+     * @return
+     */
+    public boolean onBackPressed() {
+        return GSYVideoManager.backFromWindowFull(getActivity());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("VideoPlayer: ", "topVideoUrl");
+//        binding.videoView1.onStartPlayer();
+        // 播放
+        if(topVideoUrl != null && !("").equals(topVideoUrl)) {
+            detailPlayer.setUp(topVideoUrl, true, "");
+            detailPlayer.startPlayLogic();
+        } else {
+            detailPlayer.setUp("http://tengdamy.cn/video/video2.mp4", true, "");
+            detailPlayer.startPlayLogic();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GSYVideoManager.onResume();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        GSYVideoManager.releaseAllVideos();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
     }
 
 }

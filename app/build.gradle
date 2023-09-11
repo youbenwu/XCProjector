@@ -89,4 +89,6 @@ dependencies {
     implementation 'com.lijiankun24:shadowlayout:1.0.0'
 
 
+    // 同时支持视频和图片查看
+    implementation 'io.github.FlyJingFish.OpenImage:OpenImageFullLib:2.1.3'
 }

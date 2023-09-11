@@ -1,5 +1,6 @@
 package com.outmao.xcprojector.video;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,6 +8,7 @@ import android.media.MediaMetadataRetriever;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,13 +18,11 @@ import com.google.gson.Gson;
 import com.outmao.xcprojector.R;
 import com.outmao.xcprojector.image.ImagePagerActivity;
 import com.outmao.xcprojector.views.XfermodeImageView;
-import com.volokh.danylo.video_player_manager.manager.PlayerItemChangeListener;
-import com.volokh.danylo.video_player_manager.manager.SingleVideoPlayerManager;
-import com.volokh.danylo.video_player_manager.manager.VideoPlayerManager;
-import com.volokh.danylo.video_player_manager.meta.MetaData;
-import com.volokh.danylo.video_player_manager.ui.MediaPlayerWrapper;
-import com.volokh.danylo.video_player_manager.ui.SimpleMainThreadMediaPlayerListener;
-import com.volokh.danylo.video_player_manager.ui.VideoPlayerView;
+import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
+import com.shuyu.gsyvideoplayer.listener.LockClickListener;
+import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
+import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import java.util.List;
 import java.util.zip.Inflater;
@@ -37,13 +37,20 @@ public class VideoView extends RelativeLayout {
         imageView.setDest(resId);
     }
 
-    private VideoPlayerView playerView;
+    private OrientationUtils orientationUtils;
+
+    StandardGSYVideoPlayer detailPlayer;
     private XfermodeImageView imageView;
     private ImageView playButton;
+
+    // 视频封面
+    private ImageView videoCover;
 
     private String videoUrl;
 
     private List<String> imageUrls;
+
+    private Boolean isAutoPlayer = false;
 
     public void initData(String videoUrl,List<String> imageUrls){
         setVideoUrl(videoUrl);
@@ -51,6 +58,7 @@ public class VideoView extends RelativeLayout {
         if(videoUrl!=null&&(imageUrls==null||imageUrls.size()==0)){
             loadVideoImage();
         }
+
     }
 
     private Handler handler=new Handler(new Handler.Callback() {
@@ -82,8 +90,24 @@ public class VideoView extends RelativeLayout {
         }).start();
     }
 
+    private void loadVideo(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.d("VideoView videoUrl: ", videoUrl);
+                    detailPlayer.setUp(videoUrl, true, "");
+                    handler.sendMessage(new Message());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     public void setVideoUrl(String videoUrl){
         this.videoUrl=videoUrl;
+
         if(videoUrl!=null&&videoUrl.length()>0){
             playButton.setVisibility(VISIBLE);
         }else{
@@ -94,6 +118,7 @@ public class VideoView extends RelativeLayout {
         this.imageUrls=imageUrls;
         if(imageUrls!=null&&imageUrls.size()>0) {
             Glide.with(this).load(imageUrls.get(0)).centerCrop().into(imageView);
+//            Glide.with(this).load(imageUrls.get(0)).centerCrop().into(videoCover);
         }
     }
 
@@ -125,8 +150,13 @@ public class VideoView extends RelativeLayout {
     private void init(){
         imageView=findViewById(R.id.iv_image);
         playButton=findViewById(R.id.iv_play);
-        playerView=findViewById(R.id.playerView);
+        detailPlayer=findViewById(R.id.playerView);
         playButton.setVisibility(INVISIBLE);
+
+//        videoCover = new ImageView(getContext());
+//        videoCover.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//
+//        initVideoPlayer();
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,39 +172,100 @@ public class VideoView extends RelativeLayout {
                 }
             }
         });
-//        playerView.addMediaPlayerListener(new SimpleMainThreadMediaPlayerListener(){
-//            @Override
-//            public void onVideoPreparedMainThread() {
-//                // We hide the cover when video is prepared. Playback is about to start
-//                playButton.setVisibility(View.INVISIBLE);
-//            }
-//
-//            @Override
-//            public void onVideoStoppedMainThread() {
-//                // We show the cover when video is stopped
-//                playButton.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onVideoCompletionMainThread() {
-//                // We show the cover when video is completed
-//                playButton.setVisibility(View.VISIBLE);
-//            }
-//        });
-//        this.setOnFocusChangeListener(new OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if(videoUrl!=null) {
-//                    if (false) {
-//                        PlayerManagerUtil.getManager().playNewVideo(null, playerView, videoUrl);
-//                    } else {
-//                        playerView.stop();
-//                    }
-//                }
-//            }
-//        });
     }
 
+    private void initVideoPlayer() {
+
+        //增加title
+        detailPlayer.getTitleTextView().setVisibility(View.VISIBLE);
+        detailPlayer.getBackButton().setVisibility(View.VISIBLE);
+        //外部辅助的旋转，帮助全屏
+        orientationUtils = new OrientationUtils((Activity) getContext(), detailPlayer);
+        //初始化不打开外部的旋转
+        // orientationUtils.setEnable(false);
+
+        GSYVideoOptionBuilder gsyVideoOption = new GSYVideoOptionBuilder();
+        gsyVideoOption
+//                .setThumbImageView(imageView)
+                .setIsTouchWiget(true)
+                .setRotateViewAuto(false)
+                .setLockLand(false)
+                .setAutoFullWithSize(true)
+                .setShowFullAnimation(false)
+                .setNeedLockFull(true)
+                .setCacheWithPlay(false)
+                .setVideoTitle("测试视频")
+                .setUrl(videoUrl)
+                .setVideoAllCallBack(new GSYSampleCallBack() {
+                    @Override
+                    public void onPrepared(String url, Object... objects) {
+                        super.onPrepared(url, objects);
+                        //开始播放了才能旋转和全屏
+                        orientationUtils.setEnable(true);
+////                        isPlay = true;
+                    }
+
+                    @Override
+                    public void onQuitFullscreen(String url, Object... objects) {
+                        super.onQuitFullscreen(url, objects);
+
+                        if (orientationUtils != null) {
+                            orientationUtils.backToProtVideo();
+                        }
+                    }
+                }).setLockClickListener(new LockClickListener() {
+                    @Override
+                    public void onClick(View view, boolean lock) {
+                        if (orientationUtils != null) {
+                            //配合下方的onConfigurationChanged
+                            orientationUtils.setEnable(!lock);
+                        }
+                    }
+                })
+                .build(detailPlayer);
+
+        detailPlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailPlayer.startWindowFullscreen((Activity) getContext(), false, true);
+            }
+        });
+        detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //直接横屏
+                // orientationUtils.resolveByClick();
+
+                // 第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
+                detailPlayer.startWindowFullscreen((Activity) getContext(), false, true);
+            }
+        });
+    }
+
+    /**
+     * true 显示, false 不显示
+     * @param isVisible
+     */
+    public void setImageViewVisible(Boolean isVisible) {
+        try {
+            isAutoPlayer = isVisible;
+            imageView.setVisibility((isVisible ? View.VISIBLE : View.GONE));
+        } catch(Exception e) {
+            imageView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 开始播放
+     */
+    public void onStartPlayer() {
+        // 播放
+        if(isAutoPlayer) {
+            detailPlayer.startPlayLogic();
+        } else {
+
+        }
+    }
 
 
 }

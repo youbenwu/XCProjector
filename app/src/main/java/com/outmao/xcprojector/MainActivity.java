@@ -25,6 +25,8 @@ import com.outmao.xcprojector.fragment.VideoFragment;
 import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
 import com.outmao.xcprojector.util.SharepreferencesUtils;
+import com.shuyu.gsyvideoplayer.player.PlayerFactory;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -32,6 +34,8 @@ import android.widget.Toast;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import tv.danmaku.ijk.media.exo2.Exo2PlayerManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         videoFragment = new VideoFragment();
         initNavButton();
+        initGSYPlayer();
         checkState();
 
         replaceFragment(homeFragment);
@@ -60,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.home_content_view, fragment);
         transaction.commit();
+    }
+
+    /**
+     * GSYVideo 初始化
+     */
+    private void initGSYPlayer() {
+        PlayerFactory.setPlayManager(Exo2PlayerManager.class);//EXO模式
     }
 
     private void initNavButton() {

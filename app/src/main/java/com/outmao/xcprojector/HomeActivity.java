@@ -513,6 +513,9 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
 
+        } else if(event.getKeyCode()==KeyEvent.KEYCODE_BACK) {
+            // 返回不执行操作
+            return false;
         }
 
 
