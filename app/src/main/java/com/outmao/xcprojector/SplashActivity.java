@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -20,10 +21,13 @@ import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
 import com.outmao.xcprojector.util.SharepreferencesUtils;
 
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class SplashActivity extends AppCompatActivity {
 
+    private Timer timer;
 
     //设备是否激活
     private boolean isActived(){
@@ -40,6 +44,8 @@ public class SplashActivity extends AppCompatActivity {
 
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        startTimer();
 
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +78,38 @@ public class SplashActivity extends AppCompatActivity {
         //this.api_test_slide_list();
        // this.getLocation();
 
+    }
+
+    private void startTimer(){
+
+        if(timer==null){
+            timer=new Timer();
+            TimerTask task=new TimerTask() {
+                @Override
+                public void run() {
+                    HttpApiService.getInstance().account_line()
+                            .subscribe(new RxSubscriber<YYResponseData<Object>>() {
+                                @Override
+                                public void onFail(YYResponseData<Object> responseData) {
+                                    super.onFail(responseData);
+                                    Log.d("account_line接口返回", responseData.toString());
+                                      }
+                                @Override
+                                public void onSuccess(YYResponseData<Object> responseData) {
+                                    super.onSuccess(responseData);
+                                    Log.d("account_line接口返回", responseData.toString());
+                                   }
+                            });
+                }
+            };
+            timer.schedule(task,10*1000,600*1000);
+        }
+    }
+    private void stopTimer(){
+        if(timer!=null){
+            timer.cancel();
+            timer=null;
+        }
     }
 
     @Override

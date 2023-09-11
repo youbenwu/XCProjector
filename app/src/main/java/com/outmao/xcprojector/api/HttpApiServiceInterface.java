@@ -46,4 +46,17 @@ public interface HttpApiServiceInterface {
  @POST(HttpApiServiceUrl.ACCOUNT_CHECK_PWD)
  Observable<YYResponseData<Object>> account_check_pwd(@Field("password")String password);
 
+
+ //更新设备在线状态
+ //public final static String ACCOUNT_LINE = "account-line";
+ @FormUrlEncoded
+ @POST(HttpApiServiceUrl.ACCOUNT_LINE)
+ Observable<YYResponseData<Object>> account_line(@Field("device_sn") String device_sn);
+
+ //广告详情
+// public final static String SLIDE_INFO = "slide-info";
+ @GET(HttpApiServiceUrl.SLIDE_INFO)
+ Observable<YYResponseData<Object>> account_status(@Query("id") String id);
+
+
 }

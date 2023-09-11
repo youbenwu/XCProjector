@@ -17,7 +17,10 @@ public class HttpApiServiceUrl {
     //校验服务密码
     public final static String ACCOUNT_CHECK_PWD = "account-check-pwd";
 
+    //更新设备在线状态
+    public final static String ACCOUNT_LINE = "account-line";
 
-
+    //广告详情
+    public final static String SLIDE_INFO = "slide-info";
 
 }

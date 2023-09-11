@@ -59,4 +59,17 @@ public class HttpApiService {
         return ObservableHelper.subscribeOn(result);
     }
 
+
+    public Observable<YYResponseData<Object>> account_line(){
+        HttpApiServiceInterface api = YYHttpCreator.createService(HttpApiServiceInterface.class);
+        Observable<YYResponseData<Object>> result = api.account_line("");
+        return ObservableHelper.subscribeOn(result);
+    }
+
+    public Observable<YYResponseData<Object>> account_status(String id){
+        HttpApiServiceInterface api = YYHttpCreator.createService(HttpApiServiceInterface.class);
+        Observable<YYResponseData<Object>> result = api.account_status(id);
+        return ObservableHelper.subscribeOn(result);
+    }
+
 }
