@@ -26,5 +26,11 @@
             <flag name="right" value="0x0100"/>
             <flag name="bottom" value="0x1000"/>
         </attr>
+
     </declare-styleable>
+
+    <declare-styleable name="XfermodeImageView">
+        <attr name="dest" format="reference" />
+    </declare-styleable>
+
 </resources>

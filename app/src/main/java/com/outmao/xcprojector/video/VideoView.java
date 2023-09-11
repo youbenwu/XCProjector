@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.outmao.xcprojector.R;
 import com.outmao.xcprojector.image.ImagePagerActivity;
+import com.outmao.xcprojector.views.XfermodeImageView;
 import com.volokh.danylo.video_player_manager.manager.PlayerItemChangeListener;
 import com.volokh.danylo.video_player_manager.manager.SingleVideoPlayerManager;
 import com.volokh.danylo.video_player_manager.manager.VideoPlayerManager;
@@ -31,8 +32,13 @@ import androidx.annotation.Nullable;
 
 public class VideoView extends RelativeLayout {
 
+
+    public void setDestImage(int resId){
+        imageView.setDest(resId);
+    }
+
     private VideoPlayerView playerView;
-    private ImageView imageView;
+    private XfermodeImageView imageView;
     private ImageView playButton;
 
     private String videoUrl;

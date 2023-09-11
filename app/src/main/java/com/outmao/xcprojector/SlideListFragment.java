@@ -75,6 +75,11 @@ public class SlideListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.videoView1.setDestImage(R.drawable.ic_play_mb);
+        binding.videoView2.setDestImage(R.drawable.ic_play_mb2);
+        binding.videoView3.setDestImage(R.drawable.ic_play_mb2);
+        //Glide.with(this).load("https://qn.huwing.cn/2023/09/01/16935609583821101-1920_1080.jpg").centerCrop().into(binding.testImage);
+
         updateData();
         if(data==null){
           loadData();
