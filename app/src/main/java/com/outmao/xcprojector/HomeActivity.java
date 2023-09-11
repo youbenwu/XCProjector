@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,6 +46,8 @@ import java.util.Date;
 public class HomeActivity extends AppCompatActivity {
 
     private ActivityHomeBinding binding;
+
+
 
 
     @Override
@@ -407,7 +410,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(event.getKeyCode()==KeyEvent.KEYCODE_DPAD_RIGHT){
+           if(binding.ibBack.isFocused()){
+               binding.ibNext.requestFocus();
+               return true;
+           }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 
 }

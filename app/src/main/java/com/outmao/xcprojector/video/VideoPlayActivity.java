@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 
 import com.outmao.xcprojector.databinding.ActivityVideoPlayBinding;
 import com.volokh.danylo.video_player_manager.manager.PlayerItemChangeListener;
@@ -22,14 +23,22 @@ public class VideoPlayActivity extends AppCompatActivity {
         binding = ActivityVideoPlayBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         videoUrl=getIntent().getStringExtra("url");
-        Handler handler = new Handler();
-        SingleVideoPlayerManager manager=new SingleVideoPlayerManager(new PlayerItemChangeListener() {
-            @Override
-            public void onPlayerItemChanged(MetaData currentItemMetaData) {
 
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            SingleVideoPlayerManager manager=new SingleVideoPlayerManager(new PlayerItemChangeListener() {
+                @Override
+                public void onPlayerItemChanged(MetaData currentItemMetaData) {
+
+                }
+            });
+            @Override
+            public void run() {
+                manager.playNewVideo(null,binding.playerView,videoUrl);
             }
-        });
-        manager.playNewVideo(null,binding.playerView,videoUrl);
+        }, 1500);
+
     }
 
 
