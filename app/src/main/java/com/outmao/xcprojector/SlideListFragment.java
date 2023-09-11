@@ -55,6 +55,7 @@ public class SlideListFragment extends Fragment {
             args.putString(ARG_DATA, data.toString());
         }
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -68,6 +69,7 @@ public class SlideListFragment extends Fragment {
                 data=SlideListData.fromJson(json);
             }
         }
+
     }
 
     @Override

@@ -37,6 +37,7 @@ import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
 import com.outmao.xcprojector.util.BaiduLocationManager;
 import com.outmao.xcprojector.util.SharepreferencesUtils;
+import com.outmao.xcprojector.views.MenuItemView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
 
 
+    private int pageIndex=0;
 
 
     @Override
@@ -111,6 +113,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onMenu(int action) {
                 if(action==MainMenusFragment.MENU_ACTION_HOME){
+                    pageIndex=0;
                     NavController navController = Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment_content_main);
                     navController.navigate(R.id.HomeFragment);
                     return true;
@@ -118,6 +121,7 @@ public class HomeActivity extends AppCompatActivity {
                     onClickSetting();
                     return false;
                 }else if(action==MainMenusFragment.MENU_ACTION_MOVIES){
+                    pageIndex=2;
                     NavController navController = Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment_content_main);
                     navController.navigate(R.id.VideoFragment);
                     return true;
@@ -133,10 +137,12 @@ public class HomeActivity extends AppCompatActivity {
                     menusFragment.setSelectedItem(MainMenusFragment.MENU_ACTION_HOME);
                     binding.ibBack.setVisibility(View.VISIBLE);
                     binding.ibNext.setVisibility(View.VISIBLE);
+                    pageIndex=0;
                 }else if(navDestination.getId()==R.id.VideoFragment){
                     menusFragment.setSelectedItem(MainMenusFragment.MENU_ACTION_MOVIES);
                     binding.ibBack.setVisibility(View.GONE);
                     binding.ibNext.setVisibility(View.GONE);
+                    pageIndex=2;
                 }
             }
         });
@@ -413,11 +419,96 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(event.getKeyCode()==KeyEvent.KEYCODE_DPAD_RIGHT){
+            //如果是左按钮，则跳到右按钮
            if(binding.ibBack.isFocused()){
                binding.ibNext.requestFocus();
                return true;
            }
+
+            //左边菜单控制
+            if(pageIndex==0) {
+                MainMenusFragment menusFragment = (MainMenusFragment) getSupportFragmentManager().findFragmentById(R.id.menus);
+                MenuItemView menu_home = menusFragment.getView().findViewById(R.id.menu_home);
+                if (menu_home.iconView.isFocused()) {
+                    binding.ibBack.requestFocus();
+                    return true;
+                }
+                menusFragment = (MainMenusFragment) getSupportFragmentManager().findFragmentById(R.id.menus);
+                MenuItemView menu_setup = menusFragment.getView().findViewById(R.id.menu_setup);
+                if (menu_setup.iconView.isFocused()) {
+                    binding.ibBack.requestFocus();
+                    return true;
+                }
+                menusFragment = (MainMenusFragment) getSupportFragmentManager().findFragmentById(R.id.menus);
+                MenuItemView menu_movies = menusFragment.getView().findViewById(R.id.menu_movies);
+                if (menu_movies.iconView.isFocused()) {
+                    binding.ibBack.requestFocus();
+                    return true;
+                }
+            }
+
+            //从分页内容出来
+            Fragment mMainNavFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
+            Fragment fragment = mMainNavFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+            if (fragment instanceof HomeFragment) {
+                View view=((HomeFragment) fragment).getViewById(R.id.video_view2);
+                if(view!=null&&view.isFocused()){
+                    binding.ibNext.requestFocus();
+                    return true;
+                }
+                view=((HomeFragment) fragment).getViewById(R.id.video_view3);
+                if(view!=null&&view.isFocused()){
+                    binding.ibNext.requestFocus();
+                    return true;
+                }
+            }
+
+
+        }else if(event.getKeyCode()==KeyEvent.KEYCODE_DPAD_DOWN){
+
+            //左边菜单控制
+            MainMenusFragment menusFragment=(MainMenusFragment)getSupportFragmentManager().findFragmentById(R.id.menus);
+            MenuItemView menu_setup=menusFragment.getView().findViewById(R.id.menu_setup);
+            if(menu_setup.iconView.isFocused()){
+                MenuItemView menu_movies=menusFragment.getView().findViewById(R.id.menu_movies);
+                menu_movies.iconView.requestFocus();
+                return true;
+            }
+
+        }else if(event.getKeyCode()==KeyEvent.KEYCODE_DPAD_UP){
+
+            //左边菜单控制
+            MainMenusFragment menusFragment=(MainMenusFragment)getSupportFragmentManager().findFragmentById(R.id.menus);
+            MenuItemView menu_movies=menusFragment.getView().findViewById(R.id.menu_movies);
+            if(menu_movies.iconView.isFocused()){
+                MenuItemView menu_setup=menusFragment.getView().findViewById(R.id.menu_setup);
+                menu_setup.iconView.requestFocus();
+                return true;
+            }
+
+
+        }else if(event.getKeyCode()==KeyEvent.KEYCODE_DPAD_LEFT){
+
+
+            //从分页内容出来
+            Fragment mMainNavFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_content_main);
+            Fragment fragment = mMainNavFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+            if (fragment instanceof HomeFragment) {
+                View view=((HomeFragment) fragment).getViewById(R.id.video_view1);
+                if(view!=null&&view.isFocused()){
+                    binding.ibBack.requestFocus();
+                    return true;
+                }
+                view=((HomeFragment) fragment).getViewById(R.id.video_view4);
+                if(view!=null&&view.isFocused()){
+                    binding.ibBack.requestFocus();
+                    return true;
+                }
+            }
+
         }
+
+
         return super.onKeyDown(keyCode, event);
     }
 

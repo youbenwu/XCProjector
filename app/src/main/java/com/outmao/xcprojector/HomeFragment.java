@@ -25,6 +25,9 @@ import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class HomeFragment extends Fragment {
@@ -34,6 +37,16 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment() {
 
+    }
+
+    public View getViewById(int id){
+        if(binding.viewPager.getAdapter()==null)
+            return null;
+        Fragment f=((SlidesAdapter)binding.viewPager.getAdapter()).getFragment(binding.viewPager.getCurrentItem());
+        if(f==null)
+            return null;
+        View view=f.getView().findViewById(id);
+        return view;
     }
 
     @Override
@@ -76,18 +89,28 @@ public class HomeFragment extends Fragment {
 
     public final class SlidesAdapter extends FragmentStateAdapter {
         SlideListData data;
+
+        private Map<String,SlideListFragment> _fragments=new HashMap<>();
+
         public SlidesAdapter(@NonNull FragmentActivity fragmentActivity, SlideListData data) {
             super(fragmentActivity);
             this.data=data;
         }
         @Override
         public Fragment createFragment(int position) {
-            return SlideListFragment.newInstance(position+1,position==0?data:null);
+            SlideListFragment fragment= SlideListFragment.newInstance(position+1,position==0?data:null);
+            _fragments.put(position+"",fragment);
+            return fragment;
         }
         @Override
         public int getItemCount() {
             return data!=null?data.getSub_slides().getLast_page():0;
         }
+
+        public SlideListFragment getFragment(int position){
+            return _fragments.get(position+"");
+        }
+
     }
 
     private void loadData(){

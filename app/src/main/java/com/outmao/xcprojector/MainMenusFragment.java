@@ -35,6 +35,8 @@ public class MainMenusFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.menuHome.setTag(MENU_ACTION_HOME);
@@ -80,6 +82,8 @@ public class MainMenusFragment extends Fragment {
             binding.menuSetup.setSelected(binding.menuSetup==v);
             binding.menuMovies.setSelected(binding.menuMovies==v);
         }
+
+
     }
 
     @Override
@@ -98,5 +102,8 @@ public class MainMenusFragment extends Fragment {
     public interface MainMenusListener{
         boolean onMenu(int action);
     }
+
+
+
 
 }
