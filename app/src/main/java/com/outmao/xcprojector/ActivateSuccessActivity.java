@@ -18,7 +18,8 @@ public class ActivateSuccessActivity extends AppCompatActivity {
         binding.btnIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivateSuccessActivity.this, MainActivity.class);
+                //Intent intent = new Intent(ActivateSuccessActivity.this, MainActivity.class);
+                Intent intent = new Intent(ActivateSuccessActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
             }

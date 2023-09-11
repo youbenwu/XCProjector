@@ -2,12 +2,16 @@ package com.outmao.xcprojector.image;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.outmao.xcprojector.R;
 import com.outmao.xcprojector.databinding.FragmentImageBinding;
 
@@ -40,6 +44,12 @@ public class ImageFragment extends Fragment {
             imageUrl = getArguments().getString(ARG_IMAGE_URL);
         }
 
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Glide.with(this).load(imageUrl).centerCrop().into(binding.image);
     }
 
     @Override

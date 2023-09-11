@@ -87,7 +87,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goMain(){
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        //Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
         startActivity(intent);
         //finish();
     }
@@ -172,7 +173,7 @@ public class SplashActivity extends AppCompatActivity {
 //    }
 
     private void player(){
-        String url = "http://192.168.0.1/1.mp4";
+        String url = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         String type = "video/*";

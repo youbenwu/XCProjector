@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         n.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(videoFragment);
+                replaceFragment(new VideoFragment());
             }
         });
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         u.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(homeFragment);
+                replaceFragment(new HomeFragment());
             }
         });
 

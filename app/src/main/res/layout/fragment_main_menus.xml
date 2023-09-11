@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainMenusFragment">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/rl_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/ic_home_menu_bg"
+                android:layout_width="97dp"
+                android:layout_height="477dp"/>
+            <ImageView
+                android:src="@mipmap/ic_home_menu_hourse"
+                android:layout_centerInParent="true"
+                android:layout_width="51dp"
+                android:layout_height="185dp"/>
+        </RelativeLayout>
+
+        <com.outmao.xcprojector.views.MenuItemView
+            android:id="@+id/menu_home"
+            app:title="首页"
+            app:subtitle="HOME"
+            android:layout_alignTop="@+id/rl_bg"
+            android:layout_marginLeft="71dp"
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"/>
+
+        <com.outmao.xcprojector.views.MenuItemView
+            android:id="@+id/menu_setup"
+            app:title="设  置"
+            app:subtitle="SETUP"
+            android:layout_marginLeft="83dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"/>
+
+        <com.outmao.xcprojector.views.MenuItemView
+            android:id="@+id/menu_movies"
+            app:title="影  视"
+            app:subtitle="MOVIES"
+            android:layout_marginLeft="71dp"
+            android:layout_alignBottom="@+id/rl_bg"
+            android:layout_marginBottom="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginBottom="23dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="76dp"
+            android:layout_height="77dp"
+            android:src="@drawable/qrcode"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textColor="@color/light_blue_A200"
+            android:text="@string/qrcode_text"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

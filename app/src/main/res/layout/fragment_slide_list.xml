@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SlideListFragment">
+
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/rl_view1"
+                android:layout_width="574dp"
+                android:layout_height="354dp">
+
+                <com.outmao.xcprojector.video.VideoView
+                    android:id="@+id/video_view1"
+                    android:focusable="true"
+                    android:foreground="@drawable/fg_selected"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </com.outmao.xcprojector.video.VideoView>
+
+                <ImageView
+                    android:src="@drawable/ic_play_top"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="533dp"
+                    android:layout_height="36dp"/>
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/rl_view4"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <com.outmao.xcprojector.video.VideoView
+                        android:id="@+id/video_view4"
+                        android:focusable="true"
+                        android:foreground="@drawable/fg_selected"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </com.outmao.xcprojector.video.VideoView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_view5"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <com.outmao.xcprojector.video.VideoView
+                        android:id="@+id/video_view5"
+                        android:focusable="true"
+                        android:foreground="@drawable/fg_selected"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </com.outmao.xcprojector.video.VideoView>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_view6"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <com.outmao.xcprojector.video.VideoView
+                        android:id="@+id/video_view6"
+                        android:focusable="true"
+                        android:foreground="@drawable/fg_selected"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </com.outmao.xcprojector.video.VideoView>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="22dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/rl_view2"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+                <com.outmao.xcprojector.video.VideoView
+                    android:id="@+id/video_view2"
+                    android:focusable="true"
+                    android:foreground="@drawable/fg_selected"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </com.outmao.xcprojector.video.VideoView>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_view3"
+                android:layout_marginTop="14dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp">
+                <com.outmao.xcprojector.video.VideoView
+                    android:id="@+id/video_view3"
+                    android:focusable="true"
+                    android:foreground="@drawable/fg_selected"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </com.outmao.xcprojector.video.VideoView>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="-20dp"
+        android:src="@drawable/ic_play_bg"
+        android:layout_width="650dp"
+        android:layout_height="394dp"/>
+
+
+</FrameLayout>

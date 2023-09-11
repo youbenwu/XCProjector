@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="internalOnly">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
-
     <application
         android:name=".config.MyApplication"
         android:allowBackup="true"
@@ -18,7 +15,13 @@
         android:theme="@style/Theme.XCProjector"
         tools:targetApi="31">
         <activity
-            android:name=".ImageAutoPagerActivity"
+            android:name=".video.VideoPlayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".image.ImagePagerActivity"
             android:exported="false" />
         <activity
             android:name=".ActivateFailActivity"
@@ -41,13 +44,12 @@
             android:theme="@style/Theme.XCProjector.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.MONKEY" />
-
-                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -60,6 +62,8 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="vTTqUnFdC5g6HDX95FUvFkQmg5XouZzw" />
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

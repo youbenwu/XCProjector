@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_focused="true" android:drawable="@mipmap/ic_home_menu_item_selected"></item>
+    <item android:drawable="@mipmap/ic_home_menu_item"></item>
+
+</selector>

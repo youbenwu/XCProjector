@@ -12,6 +12,7 @@ public class MyApplication extends Application {
 
     public void onCreate(){
         super.onCreate();
+
         MyApplication.context = getApplicationContext();
         SharepreferencesUtils.initSharepreferencesUtils(getApplicationContext());
         try{

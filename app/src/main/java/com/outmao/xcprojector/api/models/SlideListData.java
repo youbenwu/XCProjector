@@ -1,5 +1,7 @@
 package com.outmao.xcprojector.api.models;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 
 public class SlideListData implements Serializable {
@@ -22,5 +24,13 @@ public class SlideListData implements Serializable {
 
     public void setSub_slides(SlideListSubSlides sub_slides) {
         this.sub_slides = sub_slides;
+    }
+
+    public String toString() {
+        return new Gson().toJson(this);
+    }
+
+    public static SlideListData fromJson(String json){
+        return new Gson().fromJson(json,SlideListData.class);
     }
 }

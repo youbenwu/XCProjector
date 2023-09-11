@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".image.ImageAutoPagerActivity">
+    tools:context=".video.VideoPlayActivity">
+
+    <com.volokh.danylo.video_player_manager.ui.VideoPlayerView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
