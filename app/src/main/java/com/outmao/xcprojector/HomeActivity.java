@@ -266,14 +266,20 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void checkNewPwd(){
+
+        if(SharepreferencesUtils.getShareInstance().getString(AppConfig.ACTIVE_STATUS_KEY)==null){
+            return;
+        }
+
         String pwd= SharepreferencesUtils.getShareInstance().getString(AppConfig.PWD);
         if(pwd!=null){
-            checkPwd();
+            //checkPwd();
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         View dialogView =  View.inflate(HomeActivity.this, R.layout.dialog, null);
         dialog.setView(dialogView);
@@ -286,21 +292,22 @@ public class HomeActivity extends AppCompatActivity {
         TextView okTv =(TextView) dialogView.findViewById(R.id.btn_ok);
         TextView cancelTv =(TextView) dialogView.findViewById(R.id.btn_cancel);
         EditText pwdEt =(EditText) dialogView.findViewById(R.id.et_pwd);
+        cancelTv.setVisibility(View.GONE);
         titleTv.setText("尊敬的用户");
         msgTv.setText("欢迎你使用喵影互娱");
         submsgTv.setText("为了你的安全使用\n请先设定您的“设置”新密码");
-        closeTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-        cancelTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
+//        closeTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.cancel();
+//            }
+//        });
+//        cancelTv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.cancel();
+//            }
+//        });
         okTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
