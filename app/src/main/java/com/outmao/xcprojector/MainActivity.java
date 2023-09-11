@@ -17,7 +17,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.outmao.xcprojector.api.HttpApiService;
-import com.outmao.xcprojector.api.models.SlideListData;
 import com.outmao.xcprojector.api.models.AccountStatusData;
 import com.outmao.xcprojector.config.AppConfig;
 import com.outmao.xcprojector.databinding.ActivityMainBinding;
@@ -48,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        homeFragment = new HomeFragment();
+        videoFragment = new VideoFragment();
         initNavButton();
         checkState();
 
@@ -62,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initNavButton() {
-        homeFragment = new HomeFragment();
-        videoFragment = new VideoFragment();
 
         // 影视按钮
         View n = findViewById(R.id.menu_down);
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         tvVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(new VideoFragment());
+                replaceFragment(videoFragment);
             }
         });
 
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         tvHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(new HomeFragment());
+                replaceFragment(homeFragment);
             }
         });
 

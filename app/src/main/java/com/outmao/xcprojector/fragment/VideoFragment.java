@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,13 +15,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.outmao.xcprojector.R;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /***
  * @Author : Cheng
@@ -60,24 +56,24 @@ public class VideoFragment  extends Fragment {
             }
         });
 
-        view.findViewById(R.id.image_tengxun).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.image_mangguo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                jumpToOtherApplication(OTHER_APPLICATION.YUN_SHI_TING);
+                jumpToOtherApplication(OTHER_APPLICATION.MANG_GUO_TV);
             }
         });
 
-        view.findViewById(R.id.image_douyin).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.image_bestv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                jumpToOtherApplication(OTHER_APPLICATION.DANG_BEI_APP_STORE);
+                jumpToOtherApplication(OTHER_APPLICATION.BES_TV);
             }
         });
 
-        view.findViewById(R.id.image_xiaohongshu).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.image_kugou).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                jumpToOtherApplication(OTHER_APPLICATION.XIAO_HONG_SHU);
+                jumpToOtherApplication(OTHER_APPLICATION.KU_GOU_YIN_YUE_DANG_BEI);
             }
         });
     }
@@ -86,8 +82,8 @@ public class VideoFragment  extends Fragment {
     private void jumpToOtherApplication(OTHER_APPLICATION otherApplication) {
         try{
             // 获取并打印应用名及包名,需要时解除注释,不用时不打印,应用过多时耗费资源
-            PackageManager packageManager = getActivity().getPackageManager();
-            /*List<PackageInfo> packList = packageManager.getInstalledPackages(0);
+            /*PackageManager packageManager = getActivity().getPackageManager();
+            List<PackageInfo> packList = packageManager.getInstalledPackages(0);
             for (PackageInfo aa: packList) {
                 Log.d("test: ", aa.applicationInfo.packageName);
                 Log.d("appinfo", packageManager.getApplicationLabel(aa.applicationInfo).toString());
@@ -101,7 +97,7 @@ public class VideoFragment  extends Fragment {
                 resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
                 resolveIntent.setPackage(pi.packageName);
 
-                List<ResolveInfo> apps = packageManager.queryIntentActivities(resolveIntent, 0);
+                List<ResolveInfo> apps = getActivity().getPackageManager().queryIntentActivities(resolveIntent, 0);
 
                 ResolveInfo ri = apps.iterator().next();
                 if (ri != null ) {
@@ -116,13 +112,14 @@ public class VideoFragment  extends Fragment {
                     getActivity().startActivity(intent);
                 } else {
                     // 包名是Null的时候,提示用户下载
-                    Toast.makeText(requireContext(), "暂无该应用", Toast.LENGTH_LONG).show();
+                    Log.d("OtherApplication", "未找到对应应用：" + otherApplication.getPackageName());
                 }
 
 
             }
         }catch(Exception e) {
-            Log.d("Function jumpToOtherApplication erro: ", Objects.requireNonNull(e.getMessage()));
+            e.printStackTrace();
+            Log.d("OtherApplication Error: ", "otherApplication.getPackageName()");
         }
     }
 
@@ -132,17 +129,19 @@ public class VideoFragment  extends Fragment {
  * 第三方应用的枚举
  * 应用包名根据系统打印出来数据选择需要的写死
  * 应用商城包名: com.dangbei.mimir.lightos.appstore
+ * com.dangbei.dbmusic， com.tv.kuaisou
  */
 enum OTHER_APPLICATION {
-    QI_YI_GUO_JI_SU("com.gitvjisu"),
+    QI_YI_GUO_JI_SU("com.gitvjisu.video"),
     YUN_SHI_TING("com.ktcp.tvvideo"),
-    YOU_KU(""),
+    YOU_KU("com.cibn.tv"),
     XIAO_HONG_SHU(""),
-    DOU_YIN(""),
     MANG_GUO_TV("com.starcor.mango"),
+    BES_TV("com.tv.kuaisou"),
+    KU_GOU_YIN_YUE_DANG_BEI("com.dangbei.dbmusic"),
     DANG_BEI_APP_STORE("com.dangbei.mimir.lightos.appstore");
 
-    private final String packageName;
+    private String packageName;
 
     OTHER_APPLICATION(String value) {
         this.packageName = value;
