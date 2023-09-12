@@ -353,6 +353,7 @@ public class SlideListFragment extends Fragment {
                 .setNeedLockFull(false)
                 .setCacheWithPlay(false)
                 .setVideoTitle("测试视频")
+                .setLooping(true)
                 .setVideoAllCallBack(new GSYSampleCallBack() {
                     @Override
                     public void onPrepared(String url, Object... objects) {
