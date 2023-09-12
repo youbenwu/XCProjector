@@ -16,7 +16,10 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,11 +46,13 @@ import com.outmao.xcprojector.network.YYResponseData;
 import com.outmao.xcprojector.util.BaiduLocationManager;
 import com.outmao.xcprojector.util.SharepreferencesUtils;
 import com.outmao.xcprojector.views.MenuItemView;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -221,6 +226,13 @@ public class HomeActivity extends AppCompatActivity {
                 if (fragment instanceof HomeFragment) {
                     ((HomeFragment)fragment).backPage();
                 }
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        GSYVideoManager.onPause();
+//                    }
+//                }, 1000);
             }
         });
         binding.ibNext.setOnClickListener(new View.OnClickListener() {
@@ -231,9 +243,17 @@ public class HomeActivity extends AppCompatActivity {
                 if (fragment instanceof HomeFragment) {
                     ((HomeFragment)fragment).nextPage();
                 }
+//                Handler handler = new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        GSYVideoManager.onPause();
+//                    }
+//                }, 1000);
             }
         });
     }
+
 
     private void initMenus(){
         MainMenusFragment menusFragment=(MainMenusFragment)getSupportFragmentManager().findFragmentById(R.id.menus);
@@ -336,7 +356,41 @@ public class HomeActivity extends AppCompatActivity {
                                 Log.d("接口返回", responseData.toString());
                                 if(responseData.isSuccess()){
                                     dialog.cancel();
-                                    startActivity(new Intent(Settings.ACTION_SETTINGS));
+                                    try{
+                                        String actionName = "com.htc.htcpublicsettings";
+                                        // 包名不是Null 的时候跳转
+                                        if(actionName != null) {
+                                            PackageInfo pi = getPackageManager().getPackageInfo(actionName, 0);
+
+                                            Intent resolveIntent = new Intent(Intent.ACTION_MAIN, null);
+                                            resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                                            resolveIntent.setPackage(pi.packageName);
+
+                                            List<ResolveInfo> apps = getPackageManager().queryIntentActivities(resolveIntent, 0);
+
+                                            ResolveInfo ri = apps.iterator().next();
+                                            if (ri != null ) {
+                                                String packageName = ri.activityInfo.packageName;
+                                                String className = ri.activityInfo.name;
+
+                                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                                intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                                                ComponentName cn = new ComponentName(packageName, className);
+
+                                                intent.setComponent(cn);
+                                                startActivity(intent);
+                                            } else {
+                                                // 包名是Null的时候,提示用户下载
+
+                                            }
+
+
+                                        }
+                                    }catch(Exception e) {
+                                        e.printStackTrace();
+                                        // Toast.makeText(getContext(), "暂无未支持该应用", Toast.LENGTH_LONG).show();
+                                        Log.d("OtherApplication Error: ", "otherApplication.getPackageName()");
+                                    }
                                 }else{
                                     Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
                                 }

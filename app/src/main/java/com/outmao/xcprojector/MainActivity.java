@@ -1,6 +1,9 @@
 package com.outmao.xcprojector;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -34,6 +37,8 @@ import android.widget.Toast;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 import tv.danmaku.ijk.media.exo2.Exo2PlayerManager;
 
@@ -210,7 +215,43 @@ public class MainActivity extends AppCompatActivity {
                                 Log.d("接口返回", responseData.toString());
                                 if(responseData.isSuccess()){
                                     dialog.cancel();
-                                    startActivity(new Intent(Settings.ACTION_SETTINGS));
+                                    // startActivity(new Intent(Settings.ACTION_SETTINGS));
+                                    try{
+                                        String actionName = "com.htc.htcpublicsettings";
+                                        // 包名不是Null 的时候跳转
+                                        if(actionName != null) {
+                                            PackageInfo pi = getPackageManager().getPackageInfo(actionName, 0);
+
+                                            Intent resolveIntent = new Intent(Intent.ACTION_MAIN, null);
+                                            resolveIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                                            resolveIntent.setPackage(pi.packageName);
+
+                                            List<ResolveInfo> apps = getPackageManager().queryIntentActivities(resolveIntent, 0);
+
+                                            ResolveInfo ri = apps.iterator().next();
+                                            if (ri != null ) {
+                                                String packageName = ri.activityInfo.packageName;
+                                                String className = ri.activityInfo.name;
+
+                                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                                intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                                                ComponentName cn = new ComponentName(packageName, className);
+
+                                                intent.setComponent(cn);
+                                                startActivity(intent);
+                                            } else {
+                                                // 包名是Null的时候,提示用户下载
+
+                                            }
+
+
+                                        }
+                                    }catch(Exception e) {
+                                        e.printStackTrace();
+                                        // Toast.makeText(getContext(), "暂无未支持该应用", Toast.LENGTH_LONG).show();
+                                        Log.d("OtherApplication Error: ", "otherApplication.getPackageName()");
+                                    }
+
                                 }else{
                                     Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
                                 }
