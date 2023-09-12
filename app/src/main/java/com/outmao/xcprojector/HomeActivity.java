@@ -715,10 +715,20 @@ public class HomeActivity extends AppCompatActivity {
 
             //左边菜单控制
             MainMenusFragment menusFragment=(MainMenusFragment)getSupportFragmentManager().findFragmentById(R.id.menus);
+            MenuItemView menu_home=menusFragment.getView().findViewById(R.id.menu_home);
+            MenuItemView menu_movies=menusFragment.getView().findViewById(R.id.menu_movies);
             MenuItemView menu_setup=menusFragment.getView().findViewById(R.id.menu_setup);
-            if(menu_setup.iconView.isFocused()){
-                MenuItemView menu_movies=menusFragment.getView().findViewById(R.id.menu_movies);
+            if(menu_home.iconView.isFocused()){
                 menu_movies.iconView.requestFocus();
+                return true;
+            }
+
+            if(menu_movies.iconView.isFocused()){
+                menu_setup.iconView.requestFocus();
+                return true;
+            }
+            if(menu_setup.iconView.isFocused()){
+                menu_home.iconView.requestFocus();
                 return true;
             }
 
@@ -726,10 +736,19 @@ public class HomeActivity extends AppCompatActivity {
 
             //左边菜单控制
             MainMenusFragment menusFragment=(MainMenusFragment)getSupportFragmentManager().findFragmentById(R.id.menus);
-            MenuItemView menu_movies=menusFragment.getView().findViewById(R.id.menu_setup);
-            if(menu_movies.iconView.isFocused()){
-                MenuItemView menu_setup=menusFragment.getView().findViewById(R.id.menu_movies);
+            MenuItemView menu_home=menusFragment.getView().findViewById(R.id.menu_home);
+            MenuItemView menu_movies=menusFragment.getView().findViewById(R.id.menu_movies);
+            MenuItemView menu_setup=menusFragment.getView().findViewById(R.id.menu_setup);
+            if(menu_home.iconView.isFocused()){
                 menu_setup.iconView.requestFocus();
+                return true;
+            }
+            if(menu_movies.iconView.isFocused()){
+                menu_home.iconView.requestFocus();
+                return true;
+            }
+            if(menu_setup.iconView.isFocused()){
+                menu_movies.iconView.requestFocus();
                 return true;
             }
 
