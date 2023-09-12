@@ -517,14 +517,17 @@ public class SlideListFragment extends Fragment {
             int action=msg.getData().getInt("action");
             if(action==PLAY) {
                 if (topVideoUrl != null && topVideoUrl.length() > 0) {
-//                if(detailPlayer.isActivated())
-//                    return false;
-                    //GSYVideoManager.releaseAllVideos();
+                    if(detailPlayer.isActivated()){
+                        return false;
+                    }
+                    GSYVideoManager.releaseAllVideos();
                     detailPlayer.setUp(topVideoUrl, true, "");
                     detailPlayer.startPlayLogic();
                 }
             }else if(action==STOP){
                 detailPlayer.onVideoPause();
+            }else if(action==RELEASE){
+                detailPlayer.release();
             }
             return false;
         }
@@ -532,6 +535,8 @@ public class SlideListFragment extends Fragment {
 
     public static final int PLAY=0;
     public static final int STOP=1;
+    public static final int RELEASE=2;
+
     private void startPlay(){
         Bundle bundle=new Bundle();
         bundle.putInt("action",PLAY);
@@ -548,16 +553,22 @@ public class SlideListFragment extends Fragment {
         playHandler.sendMessage(m);
     }
 
+    private void releasePlay(){
+        detailPlayer.release();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        GSYVideoManager.releaseAllVideos();
+        //GSYVideoManager.releaseAllVideos();
+        releasePlay();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         //GSYVideoManager.onPause();
+        stopPlay();
     }
 
 }

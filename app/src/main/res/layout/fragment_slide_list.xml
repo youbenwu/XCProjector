@@ -21,6 +21,9 @@
                 android:layout_marginLeft="3dp"
                 android:layout_width="608dp"
                 android:layout_height="398dp">
+
+                
+
                 <com.outmao.xcprojector.video.VideoView
                     android:id="@+id/video_view1_image"
                     android:paddingLeft="19dp"
