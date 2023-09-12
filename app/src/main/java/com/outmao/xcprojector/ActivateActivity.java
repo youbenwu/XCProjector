@@ -88,7 +88,7 @@ public class ActivateActivity extends AppCompatActivity {
             return ;
         }
 
-        if(location.trim().length()<4){
+        if(location.trim().length()<2){
             Toast.makeText(this, "酒店名称太短了", Toast.LENGTH_LONG).show();
             return ;
         }

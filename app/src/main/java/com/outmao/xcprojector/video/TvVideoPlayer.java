@@ -205,12 +205,7 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
                         }
                         break;
                     case GSYVideoPlayer.CURRENT_STATE_AUTO_COMPLETE:
-                        startPlayLogic();
-                        isPlayComplete = false;
-                        mSeekTimePosition = 0;
-                        mProgressBar.setProgress(0);
-                        setStateAndUi(CURRENT_STATE_PLAYING);
-                        resetTime();
+                        autoPlayer();
 
                         break;
                     default:
@@ -233,6 +228,15 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
         }
     }
 
+
+    public void autoPlayer() {
+        startPlayLogic();
+        isPlayComplete = false;
+        mSeekTimePosition = 0;
+        mProgressBar.setProgress(0);
+        setStateAndUi(CURRENT_STATE_PLAYING);
+        resetTime();
+    }
     private static boolean firstKeyDown = true;
 
     private void onClickUi() {
@@ -261,6 +265,7 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
 
     public static void setPlayComplete(boolean PlayComplete) {
         isPlayComplete = PlayComplete;
+
     }
 
     //连续按下左右键
