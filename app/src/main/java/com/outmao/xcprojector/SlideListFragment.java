@@ -184,6 +184,7 @@ public class SlideListFragment extends Fragment {
                     binding.videoView1Image.setVisibility(View.VISIBLE);
                     binding.videoView1Image.initData(info.getVideo_url_txt(),info.getThumbs_txt());
                     binding.videoView1Image.setTag(info.getId());
+                    binding.videoView1Image.setTag(info.getId());
                     binding.rlView1.setVisibility(View.VISIBLE);
                 }
 
@@ -416,6 +417,12 @@ public class SlideListFragment extends Fragment {
     public void onStart() {
         super.onStart();
     }
+
+    public void onPageSelected(){
+
+    }
+
+
 
     private void openSystemVideo(String url) throws Exception {
         if(url != null && !("").equals(url)) {

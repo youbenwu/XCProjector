@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,6 +66,7 @@ public class HomeFragment extends Fragment {
     public boolean backPage(){
         if(binding.viewPager.getCurrentItem()>0){
             binding.viewPager.setCurrentItem(binding.viewPager.getCurrentItem()-1);
+
             return true;
         }
         return false;
@@ -72,6 +74,15 @@ public class HomeFragment extends Fragment {
 
     private void initViewPager(SlideListData data){
         binding.viewPager.setAdapter(new SlidesAdapter(this.getActivity(),data));
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                Log.d("onPageSelected",position+"");
+                super.onPageSelected(position);
+                SlidesAdapter adapter=(SlidesAdapter)binding.viewPager.getAdapter();
+                adapter.getFragment(position).onPageSelected();
+            }
+        });
     }
 
     @Override
