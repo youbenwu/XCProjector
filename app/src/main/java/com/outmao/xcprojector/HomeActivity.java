@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.outmao.xcprojector.api.HttpApiService;
 import com.outmao.xcprojector.api.models.AccountStatusData;
 import com.outmao.xcprojector.api.models.SlideInfo;
@@ -106,6 +107,20 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void weaterQuery(){
+        String d=SharepreferencesUtils.getShareInstance().getString("weater-day");
+        if(d!=null){
+            String nowDay=Calendar.getInstance().get(Calendar.DAY_OF_YEAR)+"";
+            if(d.equals(nowDay)){
+                String json=SharepreferencesUtils.getShareInstance().getString("weater");
+                if(json!=null){
+                    WeaterResult result=new Gson().fromJson(json,WeaterResult.class);
+                    updateWeaterInfo(result);
+                    return;
+                }
+            }
+        }
+
+
         String city="广州";
         if(BaiduLocationManager.manager.location!=null){
             city=BaiduLocationManager.manager.location.getCity();
@@ -123,14 +138,21 @@ public class HomeActivity extends AppCompatActivity {
                     public void onSuccess(WeaterResult responseData) {
                         super.onSuccess(responseData);
                         if(responseData.getError_code()==0){
-                            binding.header.tvTianqi.setText(responseData.getResult().getRealtime().getInfo());
-                            binding.header.tvQiwen.setText(responseData.getResult().getRealtime().getTemperature()+"°C");
-                            binding.header.tvFengli.setText(responseData.getResult().getRealtime().getPower());
-                            binding.header.tvKongqi.setText(responseData.getResult().getRealtime().getAqiString());
+                            SharepreferencesUtils.getShareInstance().putString("weater-day",Calendar.getInstance().get(Calendar.DAY_OF_YEAR)+"");
+                            SharepreferencesUtils.getShareInstance().putString("weater",responseData.toString());
+                            updateWeaterInfo(responseData);
                         }
                         Log.d("weatherQuery",responseData.toString());
                     }
                 });
+    }
+
+    private void updateWeaterInfo(WeaterResult responseData){
+        binding.header.tvTianqi.setText(responseData.getResult().getRealtime().getInfo());
+        binding.header.tvQiwen.setText(responseData.getResult().getRealtime().getTemperature()+"°C");
+        binding.header.tvFengli.setText(responseData.getResult().getRealtime().getPower());
+        binding.header.tvKongqi.setText(responseData.getResult().getRealtime().getAqiString());
+
     }
 
     private void init(){

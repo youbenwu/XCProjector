@@ -152,8 +152,10 @@ public class SlideListFragment extends Fragment {
             //主图
             if(data.getMain_slide()!=null){
                 SlideInfo info=data.getMain_slide();
-
-                topVideoType = info.getType();
+//                binding.videoView1.initData(info.getVideo_url_txt(),info.getThumbs_txt());
+//                binding.videoView1.setImageViewVisible(false);
+                Log.d("VideoPlayer url: ", info.getVideo_url_txt());
+                topVideoUrl = info.getVideo_url_txt();
                 binding.hotelName.setText(info.getHotel_name() == null ? "" : info.getHotel_name());
                 binding.mainTitle.setText(info.getTitle() == null ? "" : info.getTitle());
                 Log.d("VideoPlayer url: ", topVideoType + "");
@@ -275,10 +277,6 @@ public class SlideListFragment extends Fragment {
     }
 
     private void initVideoPlayer() {
-
-        if(topVideoType == 1) {
-            return;
-        }
         //增加title
         detailPlayer.getTitleTextView().setVisibility(View.GONE);
         detailPlayer.getBackButton().setVisibility(View.GONE);
@@ -388,11 +386,11 @@ public class SlideListFragment extends Fragment {
 //        binding.videoView1.onStartPlayer();
         // 播放
         // topVideoUrl = "http://tengdamy.cn/video/video2.mp4";
-        if(topVideoType == 2 && topVideoUrl != null && !("").equals(topVideoUrl)) {
+        if(topVideoUrl != null && !("").equals(topVideoUrl)) {
             detailPlayer.setUp(topVideoUrl, true, "");
             detailPlayer.startPlayLogic();
         } else {
-
+            Toast.makeText(getContext(), "请先设置视频地址", Toast.LENGTH_LONG).show();
         }
     }
 

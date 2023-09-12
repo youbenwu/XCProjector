@@ -63,12 +63,12 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                goMain();
-//                if(!isActived()){
-//                    goActivate();
-//                }else{
-//                    goMain();
-//                }
+               // goMain();
+                if(!isActived()){
+                    goActivate();
+                }else{
+                    goMain();
+                }
                 first=false;
             }
         }, 1500);

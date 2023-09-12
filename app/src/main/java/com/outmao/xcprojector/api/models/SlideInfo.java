@@ -12,6 +12,8 @@ import java.util.List;
 * */
 public class SlideInfo implements Serializable {
 
+    private String id;
+
     private int type;
     private List<String> thumbs_txt;
     private String video_url_txt;
@@ -21,6 +23,14 @@ public class SlideInfo implements Serializable {
     private String sub_title;
 
     private String hotel_name;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getType() {
         return type;

@@ -5,7 +5,7 @@ public class AppConfig {
 
 
     public static boolean testData=true;
-    public static final int v=0;
+    public static final int v=2;
 
     public static final String IMEI_KEY ="device_sn";
 
