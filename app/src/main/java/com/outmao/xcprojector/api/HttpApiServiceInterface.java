@@ -2,6 +2,7 @@ package com.outmao.xcprojector.api;
 
 import com.outmao.xcprojector.api.models.AccountStatusData;
 import com.outmao.xcprojector.api.models.SlideListData;
+import com.outmao.xcprojector.api.models.WeaterResult;
 import com.outmao.xcprojector.network.YYResponseData;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -57,6 +58,11 @@ public interface HttpApiServiceInterface {
 // public final static String SLIDE_INFO = "slide-info";
  @GET(HttpApiServiceUrl.SLIDE_INFO)
  Observable<YYResponseData<Object>> slide_info(@Query("id") String id);
+
+
+ //http://apis.juhe.cn/simpleWeather/query
+ @GET("http://apis.juhe.cn/simpleWeather/query?key=721031753c3a054e034b6013db85f24b")
+ Observable<WeaterResult> weatherQuery(@Query("city") String city);
 
 
 }

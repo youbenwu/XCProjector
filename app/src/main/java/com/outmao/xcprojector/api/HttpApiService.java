@@ -3,11 +3,13 @@ package com.outmao.xcprojector.api;
 
 import com.outmao.xcprojector.api.models.AccountStatusData;
 import com.outmao.xcprojector.api.models.SlideListData;
+import com.outmao.xcprojector.api.models.WeaterResult;
 import com.outmao.xcprojector.network.ObservableHelper;
 import com.outmao.xcprojector.network.YYHttpCreator;
 import com.outmao.xcprojector.network.YYResponseData;
 
 import retrofit2.http.Field;
+import retrofit2.http.Query;
 import rx.Observable;
 
 public class HttpApiService {
@@ -69,6 +71,12 @@ public class HttpApiService {
     public Observable<YYResponseData<Object>> slide_info(String id){
         HttpApiServiceInterface api = YYHttpCreator.createService(HttpApiServiceInterface.class);
         Observable<YYResponseData<Object>> result = api.slide_info(id);
+        return ObservableHelper.subscribeOn(result);
+    }
+
+    public Observable<WeaterResult> weatherQuery(String city){
+        HttpApiServiceInterface api = YYHttpCreator.createService(HttpApiServiceInterface.class);
+        Observable<WeaterResult> result = api.weatherQuery(city);
         return ObservableHelper.subscribeOn(result);
     }
 

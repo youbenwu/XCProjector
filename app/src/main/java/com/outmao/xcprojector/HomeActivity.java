@@ -31,6 +31,7 @@ import com.outmao.xcprojector.api.models.AccountStatusData;
 import com.outmao.xcprojector.api.models.SlideInfo;
 import com.outmao.xcprojector.api.models.SlideListData;
 import com.outmao.xcprojector.api.models.SlideListSubSlides;
+import com.outmao.xcprojector.api.models.WeaterResult;
 import com.outmao.xcprojector.config.AppConfig;
 import com.outmao.xcprojector.databinding.ActivityHomeBinding;
 import com.outmao.xcprojector.databinding.ActivityMainBinding;
@@ -60,6 +61,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private boolean isCheckPwd=false;
 
+    private boolean isWeaterQuery=false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +87,13 @@ public class HomeActivity extends AppCompatActivity {
                 public void run() {
                     online();
                     checkState();
+                    if(!isWeaterQuery){
+                        isWeaterQuery=true;
+                        weaterQuery();
+                    }
                 }
             };
-            timer.schedule(task,0,600*1000);
+            timer.schedule(task,1000,600*1000);
         }
     }
     private void stopTimer(){
@@ -96,11 +103,40 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void weaterQuery(){
+        String city="广州";
+        if(BaiduLocationManager.manager.location!=null){
+            city=BaiduLocationManager.manager.location.getCity();
+        }
+        HttpApiService.getInstance().weatherQuery(city)
+                .subscribe(new RxSubscriber<WeaterResult>() {
+                    @Override
+                    public void onFail(WeaterResult responseData) {
+                        super.onFail(responseData);
+                        Log.d("weatherQuery",responseData.toString());
+                        isWeaterQuery=false;
+                    }
+
+                    @Override
+                    public void onSuccess(WeaterResult responseData) {
+                        super.onSuccess(responseData);
+                        if(responseData.getError_code()==0){
+                            binding.header.tvQiwen.setText(responseData.getResult().getRealtime().getTemperature()+"°C");
+                            binding.header.tvFengli.setText(responseData.getResult().getRealtime().getPower());
+                            binding.header.tvKongqi.setText(responseData.getResult().getRealtime().getHumidity());
+                            binding.header.tvKongqi.setText(responseData.getResult().getRealtime().getInfo());
+                        }
+                        Log.d("weatherQuery",responseData.toString());
+                    }
+                });
+    }
+
     private void init(){
         initHeader();
         initMenus();
         initButtons();
         startTimer();
+
     }
 
     private void initHeader(){
