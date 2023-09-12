@@ -419,7 +419,12 @@ public class SlideListFragment extends Fragment {
     }
 
     public void onPageSelected(boolean selected){
+        if(selected){
 
+        }else{
+            //detailPlayer.stopVideo();
+            GSYVideoManager.onPause();
+        }
     }
 
 
@@ -459,7 +464,7 @@ public class SlideListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        GSYVideoManager.onResume();
+        //GSYVideoManager.onResume();
 
     }
 

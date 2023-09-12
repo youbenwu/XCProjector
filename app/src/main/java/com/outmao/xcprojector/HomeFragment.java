@@ -59,6 +59,8 @@ public class HomeFragment extends Fragment {
     }
 
     public boolean nextPage(){
+        if(binding.viewPager.getAdapter()==null)
+            return false;
         if(binding.viewPager.getCurrentItem()<binding.viewPager.getAdapter().getItemCount()-1){
             binding.viewPager.setCurrentItem(binding.viewPager.getCurrentItem()+1);
             return true;
@@ -67,6 +69,8 @@ public class HomeFragment extends Fragment {
     }
 
     public boolean backPage(){
+        if(binding.viewPager.getAdapter()==null)
+            return false;
         if(binding.viewPager.getCurrentItem()>0){
             binding.viewPager.setCurrentItem(binding.viewPager.getCurrentItem()-1);
 
