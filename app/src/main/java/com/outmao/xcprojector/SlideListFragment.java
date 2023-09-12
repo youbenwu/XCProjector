@@ -380,7 +380,7 @@ public class SlideListFragment extends Fragment {
     }
 
     private void openSystemVideo(String url) throws Exception {
-        if(topVideoUrl != null && !("").equals(topVideoUrl)) {
+        if(url != null && !("").equals(url)) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
             String type = "video/*";

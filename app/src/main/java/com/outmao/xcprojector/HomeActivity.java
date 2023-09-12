@@ -103,6 +103,8 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+
+
     private void weaterQuery(){
         String city="广州";
         if(BaiduLocationManager.manager.location!=null){
@@ -121,10 +123,10 @@ public class HomeActivity extends AppCompatActivity {
                     public void onSuccess(WeaterResult responseData) {
                         super.onSuccess(responseData);
                         if(responseData.getError_code()==0){
+                            binding.header.tvTianqi.setText(responseData.getResult().getRealtime().getInfo());
                             binding.header.tvQiwen.setText(responseData.getResult().getRealtime().getTemperature()+"°C");
                             binding.header.tvFengli.setText(responseData.getResult().getRealtime().getPower());
-                            binding.header.tvKongqi.setText(responseData.getResult().getRealtime().getHumidity());
-                            binding.header.tvKongqi.setText(responseData.getResult().getRealtime().getInfo());
+                            binding.header.tvKongqi.setText(responseData.getResult().getRealtime().getAqiString());
                         }
                         Log.d("weatherQuery",responseData.toString());
                     }

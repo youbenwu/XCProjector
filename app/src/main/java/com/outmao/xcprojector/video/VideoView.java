@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -162,14 +164,35 @@ public class VideoView extends RelativeLayout {
                     intent.putExtra("url",videoUrl);
                     getContext().startActivity(intent);
                 }else if(imageUrls!=null&&imageUrls.size()>0){
-                    Intent intent = new Intent(getContext(), ImagePagerActivity.class);
-                    intent.putExtra("data",new Gson().toJson(imageUrls));
-                    getContext().startActivity(intent);
+//                    Intent intent = new Intent(getContext(), ImagePagerActivity.class);
+//                    intent.putExtra("data",new Gson().toJson(imageUrls));
+//                    getContext().startActivity(intent);
+                    openSystemVideo(videoUrl);
                 }
                 //后台统计数据
                 slide_info();
             }
         });
+    }
+
+    private void openSystemVideo(String url)  {
+        try {
+            if(url != null && !("").equals(url)) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                String type = "video/*";
+                Uri uri = Uri.parse(url);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(uri,type);
+                getContext().startActivity(intent);
+            } else {
+                Toast.makeText(getContext(), "请先设置视频地址", Toast.LENGTH_LONG).show();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void slide_info(){

@@ -39,6 +39,10 @@ public class WeaterResult extends YYResponseData implements Serializable {
         this.error_code = error_code;
     }
 
+    @Override
+    public boolean isSuccess() {
+        return error_code == 0;
+    }
     public WeaterInfo getResult() {
         return result;
     }

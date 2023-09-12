@@ -76,6 +76,30 @@ public class WeaterRealtime implements Serializable {
     public void setAqi(String aqi) {
         this.aqi = aqi;
     }
+
+    public String getAqiString(){
+        int q=Integer.parseInt(aqi);
+        if(q<=50){
+            return "优";
+        }
+        if(q<100){
+            return "良";
+        }
+        if(q<150){
+            return "轻度污染";
+        }
+        if(q<200){
+            return "中度污染";
+        }
+        if(q<300){
+            return "重度污染";
+        }
+        if(q>300){
+            return "严重污染";
+        }
+        return "优";
+    }
+
 }
 
 
