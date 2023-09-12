@@ -26,6 +26,7 @@ import com.outmao.xcprojector.databinding.FragmentHomeBinding;
 import com.outmao.xcprojector.databinding.FragmentMainMenusBinding;
 import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -242,6 +243,10 @@ public class HomeFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
+    }
 
 }

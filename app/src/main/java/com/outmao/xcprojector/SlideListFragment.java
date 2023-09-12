@@ -438,11 +438,14 @@ public class SlideListFragment extends Fragment {
         });
     }
 
-    // @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        GSYVideoManager.onPause();
-//    }
+     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        //GSYVideoManager.onPause();
+         if(!isVisibleToUser){
+             stopPlay();
+         }
+    }
 
     /**
      * 返回是否全屏
@@ -570,5 +573,8 @@ public class SlideListFragment extends Fragment {
         //GSYVideoManager.onPause();
         stopPlay();
     }
+
+
+
 
 }
