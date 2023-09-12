@@ -154,8 +154,6 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
         pointY = size.y / 2;
         moveX = pointX;
         moveY = pointY;
-
-        Log.d("TvVideoPlayer View: ", "pointX: " + pointX + "pointY: " + pointY + "moveX: " + moveX + "moveY: " + moveY);
     }
 
     //处理按键快进和快退
@@ -176,7 +174,7 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
                     onClickUi();
                     firstKeyDown();
                     mHandler.sendEmptyMessage(LEFT);
-                    mHandler.sendEmptyMessageDelayed(CANCLE, 1500);
+                    // mHandler.sendEmptyMessageDelayed(CANCLE, 1500);
                     resetTime();
                 }
                 break;
@@ -206,12 +204,13 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
                         }
                         break;
                     case GSYVideoPlayer.CURRENT_STATE_AUTO_COMPLETE:
-                        if(mIfCurrentIsFullscreen) {
-                            startPlayLogic();
-                            isPlayComplete = false;
-                            mSeekTimePosition = 0;
-                            mProgressBar.setProgress(0);
-                        }
+                        startPlayLogic();
+                        isPlayComplete = false;
+                        mSeekTimePosition = 0;
+                        mProgressBar.setProgress(0);
+                        setStateAndUi(CURRENT_STATE_PLAYING);
+                        resetTime();
+
                         break;
                     default:
                         break;
@@ -247,6 +246,7 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
     private void firstKeyDown() {
         if (firstKeyDown) {
             touchSurfaceDown(pointX, pointY);
+
             firstKeyDown = false;
             if (mSeekTimePosition >= getDuration() || isPlayComplete) {
                 //TODO : 暂未有逻辑
@@ -266,21 +266,17 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
     private void keyMove() {
         if ((mIfCurrentIsFullscreen && mIsTouchWigetFull)
             || (mIsTouchWiget && !mIfCurrentIsFullscreen)) {
-            Log.d("TvVideoPlayer View: 1111111111","1");
             if (!mChangePosition && !mChangeVolume && !mBrightness) {
                 touchSurfaceMoveFullLogic(Math.abs(moveX - pointX), 0);
             }
         }
         if (mSeekTimePosition >= getDuration() || isPlayComplete) {
-            Log.d("TvVideoPlayer View: 1111111111","2");
             mHandler.sendEmptyMessageDelayed(CANCLE, 1500);
             mBottomContainer.setVisibility(GONE);
         }  else {
-            float mSeekTimePositionT = moveX - pointX;
-            Log.d("TvVideoPlayer View: 1111111111","a: " + mSeekTimePosition + "  " + getDuration() + "  "  + mSeekTimePositionT + " " + pointX);
             mChangePosition = true;
 
-            touchSurfaceMove(mSeekTimePositionT, 0, pointY);
+            touchSurfaceMove(moveX - pointX, 0, pointY);
             mBottomContainer.setVisibility(VISIBLE);
             onProgressChanged(mProgressBar, (int) (mSeekTimePosition * 100 / getDuration()), true);
         }
@@ -323,12 +319,11 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
                         moveX = moveX + pointX / 200;
                     }
 
-                    Log.d("Mox 111: ", "moveX: " + moveX);
                     keyMove();
                     break;
                 case CANCLE:                        //停止按键
                     firstKeyDown = true;
-                    moveX = pointX;
+//                    moveX = pointX;
                     tim = 2;
                     onStopTrackingTouch(mProgressBar);
                     mBottomContainer.setVisibility(GONE);

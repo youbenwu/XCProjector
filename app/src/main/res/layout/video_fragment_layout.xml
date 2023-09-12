@@ -46,7 +46,7 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/image_youku"
-            android:layout_width="204dp"
+            android:layout_width="194dp"
             android:layout_height="0dp"
             android:src="@drawable/youku"
             android:scaleType="centerCrop"

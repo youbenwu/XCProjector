@@ -1,6 +1,7 @@
 package com.outmao.xcprojector;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -250,8 +251,6 @@ public class SlideListFragment extends Fragment {
     }
 
     private void initVideoPlayer() {
-        String url = "http://tengdamy.cn/video/video2.mp4";
-
         //增加title
         detailPlayer.getTitleTextView().setVisibility(View.GONE);
         detailPlayer.getBackButton().setVisibility(View.GONE);
@@ -313,7 +312,24 @@ public class SlideListFragment extends Fragment {
         detailPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                detailPlayer.startWindowFullscreen(getActivity(), false, true);
+                // 调用第三方控件播放, 前进后退会有问题
+                // detailPlayer.startWindowFullscreen(getActivity(), false, true);
+                // 调用系统播放,按键可用,视频播放进度上会有问题
+                try{
+                    if(topVideoUrl != null && !("").equals(topVideoUrl)) {
+                        GSYVideoManager.releaseAllVideos();
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);
+                        String type = "video/*";
+                        Uri uri = Uri.parse(topVideoUrl);
+                        intent.setDataAndType(uri,type);
+                        getContext().startActivity(intent);
+                    } else {
+                        Toast.makeText(getContext(), "请先设置视频地址", Toast.LENGTH_LONG).show();
+                    }
+                } catch(Exception e) {
+
+                }
             }
         });
 
@@ -351,12 +367,12 @@ public class SlideListFragment extends Fragment {
         Log.d("VideoPlayer: ", "topVideoUrl");
 //        binding.videoView1.onStartPlayer();
         // 播放
+        // topVideoUrl = "http://tengdamy.cn/video/video2.mp4";
         if(topVideoUrl != null && !("").equals(topVideoUrl)) {
             detailPlayer.setUp(topVideoUrl, true, "");
             detailPlayer.startPlayLogic();
         } else {
-            detailPlayer.setUp("http://tengdamy.cn/video/video2.mp4", true, "");
-            detailPlayer.startPlayLogic();
+            Toast.makeText(getContext(), "请先设置视频地址", Toast.LENGTH_LONG).show();
         }
     }
 
