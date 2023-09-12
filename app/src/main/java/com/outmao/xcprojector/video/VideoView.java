@@ -160,14 +160,14 @@ public class VideoView extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 if(videoUrl!=null&&videoUrl.length()>0){
-                    Intent intent = new Intent(getContext(), VideoPlayActivity.class);
-                    intent.putExtra("url",videoUrl);
-                    getContext().startActivity(intent);
-                }else if(imageUrls!=null&&imageUrls.size()>0){
-//                    Intent intent = new Intent(getContext(), ImagePagerActivity.class);
-//                    intent.putExtra("data",new Gson().toJson(imageUrls));
+//                    Intent intent = new Intent(getContext(), VideoPlayActivity.class);
+//                    intent.putExtra("url",videoUrl);
 //                    getContext().startActivity(intent);
                     openSystemVideo(videoUrl);
+                }else if(imageUrls!=null&&imageUrls.size()>0){
+                    Intent intent = new Intent(getContext(), ImagePagerActivity.class);
+                    intent.putExtra("data",new Gson().toJson(imageUrls));
+                    getContext().startActivity(intent);
                 }
                 //后台统计数据
                 slide_info();
@@ -231,7 +231,7 @@ public class VideoView extends RelativeLayout {
                 .setShowFullAnimation(false)
                 .setNeedLockFull(true)
                 .setCacheWithPlay(false)
-                .setVideoTitle("测试视频")
+                .setVideoTitle("")
                 .setUrl(videoUrl)
                 .setVideoAllCallBack(new GSYSampleCallBack() {
                     @Override

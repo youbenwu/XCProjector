@@ -59,6 +59,7 @@ public class SlideListFragment extends Fragment {
     TvVideoPlayer detailPlayer;
 
     private String topVideoUrl;
+    private int topVideoType = 1;
 
     private ImageView topVideoCover;
 
@@ -151,16 +152,28 @@ public class SlideListFragment extends Fragment {
             //主图
             if(data.getMain_slide()!=null){
                 SlideInfo info=data.getMain_slide();
-//                binding.videoView1.initData(info.getVideo_url_txt(),info.getThumbs_txt());
-//                binding.videoView1.setImageViewVisible(false);
-                Log.d("VideoPlayer url: ", info.getVideo_url_txt());
-                topVideoUrl = info.getVideo_url_txt();
+
+                topVideoType = info.getType();
                 binding.hotelName.setText(info.getHotel_name() == null ? "" : info.getHotel_name());
                 binding.mainTitle.setText(info.getTitle() == null ? "" : info.getTitle());
-                if(info.getThumbs_txt() != null && info.getThumbs_txt().size() > 0 && !("").equals(info.getThumbs_txt().get(0))) {
-                    Glide.with(this).load(info.getThumbs_txt().get(0)).centerCrop().into(topVideoCover);
+                Log.d("VideoPlayer url: ", topVideoType + "");
+                if(topVideoType == 2) {
+                    binding.videoView1Image.setVisibility(View.GONE);
+                    binding.videoView1.setVisibility(View.VISIBLE);
+                    Log.d("VideoPlayer url: ", info.getVideo_url_txt());
+                    topVideoUrl = info.getVideo_url_txt();
+                    if(info.getThumbs_txt() != null && info.getThumbs_txt().size() > 0 && !("").equals(info.getThumbs_txt().get(0))) {
+                        Glide.with(this).load(info.getThumbs_txt().get(0)).centerCrop().into(topVideoCover);
+                    }
+                    binding.rlView1.setVisibility(View.VISIBLE);
+                } else {
+                    binding.videoView1.setVisibility(View.GONE);
+                    binding.videoView1Image.setVisibility(View.VISIBLE);
+                    binding.videoView1Image.initData(info.getVideo_url_txt(),info.getThumbs_txt());
+
+                    binding.rlView1.setVisibility(View.VISIBLE);
                 }
-                binding.rlView1.setVisibility(View.VISIBLE);
+
             }
 
 
@@ -262,6 +275,10 @@ public class SlideListFragment extends Fragment {
     }
 
     private void initVideoPlayer() {
+
+        if(topVideoType == 1) {
+            return;
+        }
         //增加title
         detailPlayer.getTitleTextView().setVisibility(View.GONE);
         detailPlayer.getBackButton().setVisibility(View.GONE);
@@ -371,11 +388,11 @@ public class SlideListFragment extends Fragment {
 //        binding.videoView1.onStartPlayer();
         // 播放
         // topVideoUrl = "http://tengdamy.cn/video/video2.mp4";
-        if(topVideoUrl != null && !("").equals(topVideoUrl)) {
+        if(topVideoType == 2 && topVideoUrl != null && !("").equals(topVideoUrl)) {
             detailPlayer.setUp(topVideoUrl, true, "");
             detailPlayer.startPlayLogic();
         } else {
-            Toast.makeText(getContext(), "请先设置视频地址", Toast.LENGTH_LONG).show();
+
         }
     }
 
