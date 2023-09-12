@@ -69,6 +69,12 @@ public class HomeActivity extends AppCompatActivity {
         init();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopTimer();
+    }
+
     private void startTimer(){
 
         if(timer==null){
@@ -94,7 +100,6 @@ public class HomeActivity extends AppCompatActivity {
         initHeader();
         initMenus();
         initButtons();
-        checkState();
         startTimer();
     }
 
@@ -327,9 +332,19 @@ public class HomeActivity extends AppCompatActivity {
 
     private void checkNewPwd(){
 
+        if(closeDialog!=null){
+            return;
+        }
+
+        if(isCheckPwd){
+            return;
+        }
+
         if(SharepreferencesUtils.getShareInstance().getString(AppConfig.ACTIVE_STATUS_KEY)==null){
             return;
         }
+
+        isCheckPwd=true;
 
         String pwd= SharepreferencesUtils.getShareInstance().getString(AppConfig.PWD);
         if(pwd!=null){
