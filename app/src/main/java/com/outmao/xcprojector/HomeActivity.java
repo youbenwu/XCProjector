@@ -709,9 +709,9 @@ public class HomeActivity extends AppCompatActivity {
 
             //左边菜单控制
             MainMenusFragment menusFragment=(MainMenusFragment)getSupportFragmentManager().findFragmentById(R.id.menus);
-            MenuItemView menu_movies=menusFragment.getView().findViewById(R.id.menu_movies);
+            MenuItemView menu_movies=menusFragment.getView().findViewById(R.id.menu_setup);
             if(menu_movies.iconView.isFocused()){
-                MenuItemView menu_setup=menusFragment.getView().findViewById(R.id.menu_setup);
+                MenuItemView menu_setup=menusFragment.getView().findViewById(R.id.menu_movies);
                 menu_setup.iconView.requestFocus();
                 return true;
             }
