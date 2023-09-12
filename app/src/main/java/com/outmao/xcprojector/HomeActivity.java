@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.text.method.PasswordTransformationMethod;
+import android.text.method.TransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -114,8 +116,8 @@ public class HomeActivity extends AppCompatActivity {
                     timerHandler.sendMessage(new Message());
                 }
             };
-            timer.schedule(task,1000,1*1000);
-            //timer.schedule(task,1000,600*1000);
+            //timer.schedule(task,1000,1*1000);
+            timer.schedule(task,1000,600*1000);
         }
     }
     private void stopTimer(){
@@ -317,6 +319,9 @@ public class HomeActivity extends AppCompatActivity {
         TextView okTv =(TextView) dialogView.findViewById(R.id.btn_ok);
         TextView cancelTv =(TextView) dialogView.findViewById(R.id.btn_cancel);
         EditText pwdEt =(EditText) dialogView.findViewById(R.id.et_pwd);
+        //设置密文显示
+        TransformationMethod method = PasswordTransformationMethod.getInstance();
+        pwdEt.setTransformationMethod(method);
         titleTv.setText("尊敬的用户");
         msgTv.setText("此内容受密码保护");
         submsgTv.setText("请输入您的设置密码");
@@ -519,6 +524,9 @@ public class HomeActivity extends AppCompatActivity {
         TextView okTv =(TextView) dialogView.findViewById(R.id.btn_ok);
         TextView cancelTv =(TextView) dialogView.findViewById(R.id.btn_cancel);
         EditText pwdEt =(EditText) dialogView.findViewById(R.id.et_pwd);
+        //设置密文显示
+        TransformationMethod method = PasswordTransformationMethod.getInstance();
+        pwdEt.setTransformationMethod(method);
         cancelTv.setVisibility(View.GONE);
         titleTv.setText("尊敬的用户");
         msgTv.setText("欢迎你使用喵影互娱");
@@ -561,7 +569,7 @@ public class HomeActivity extends AppCompatActivity {
                                 if(responseData.isSuccess()){
                                     dialog.cancel();
                                     setNotNewActived();
-                                    checkPwd();
+                                    //checkPwd();
                                 }else{
                                     Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
                                 }
