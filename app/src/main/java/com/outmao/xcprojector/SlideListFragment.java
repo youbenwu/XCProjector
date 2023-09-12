@@ -1,6 +1,8 @@
 package com.outmao.xcprojector;
 
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -153,6 +155,8 @@ public class SlideListFragment extends Fragment {
 //                binding.videoView1.setImageViewVisible(false);
                 Log.d("VideoPlayer url: ", info.getVideo_url_txt());
                 topVideoUrl = info.getVideo_url_txt();
+                binding.hotelName.setText(info.getHotel_name() == null ? "" : info.getHotel_name());
+                binding.mainTitle.setText(info.getTitle() == null ? "" : info.getTitle());
                 if(info.getThumbs_txt() != null && info.getThumbs_txt().size() > 0 && !("").equals(info.getThumbs_txt().get(0))) {
                     Glide.with(this).load(info.getThumbs_txt().get(0)).centerCrop().into(topVideoCover);
                 }
@@ -164,6 +168,8 @@ public class SlideListFragment extends Fragment {
                 //2
                 if(data.getSub_slides().getList().size()>0){
                     SlideInfo info=data.getSub_slides().getList().get(0);
+                    binding.videoView2Title.setText(info.getTitle() == null ? "" : info.getTitle());
+                    binding.videoView2Subtitle.setText(info.getSub_title() == null ? "" : info.getSub_title());
                     binding.videoView2.initData(info.getVideo_url_txt(),info.getThumbs_txt());
                     binding.rlView2.setVisibility(View.VISIBLE);
                 }
@@ -171,6 +177,8 @@ public class SlideListFragment extends Fragment {
                 //3
                 if(data.getSub_slides().getList().size()>1){
                     SlideInfo info=data.getSub_slides().getList().get(1);
+                    binding.videoView3Title.setText(info.getTitle() == null ? "" : info.getTitle());
+                    binding.videoView3Subtitle.setText(info.getSub_title() == null ? "" : info.getSub_title());
                     binding.videoView3.initData(info.getVideo_url_txt(),info.getThumbs_txt());
                     binding.rlView3.setVisibility(View.VISIBLE);
                 }
@@ -178,6 +186,7 @@ public class SlideListFragment extends Fragment {
                 //4
                 if(data.getSub_slides().getList().size()>2){
                     SlideInfo info=data.getSub_slides().getList().get(2);
+                    binding.videoView4Title.setText(info.getTitle() == null ? "" : info.getTitle());
                     binding.videoView4.initData(info.getVideo_url_txt(),info.getThumbs_txt());
                     binding.rlView4.setVisibility(View.VISIBLE);
                 }
@@ -185,6 +194,7 @@ public class SlideListFragment extends Fragment {
                 //5
                 if(data.getSub_slides().getList().size()>3){
                     SlideInfo info=data.getSub_slides().getList().get(3);
+                    binding.videoView5Title.setText(info.getTitle() == null ? "" : info.getTitle());
                     binding.videoView5.initData(info.getVideo_url_txt(),info.getThumbs_txt());
                     binding.rlView5.setVisibility(View.VISIBLE);
                 }
@@ -192,6 +202,7 @@ public class SlideListFragment extends Fragment {
                 //6
                 if(data.getSub_slides().getList().size()>4){
                     SlideInfo info=data.getSub_slides().getList().get(4);
+                    binding.videoView6Title.setText(info.getTitle() == null ? "" : info.getTitle());
                     binding.videoView6.initData(info.getVideo_url_txt(),info.getThumbs_txt());
                     binding.rlView6.setVisibility(View.VISIBLE);
                 }
@@ -316,17 +327,9 @@ public class SlideListFragment extends Fragment {
                 // detailPlayer.startWindowFullscreen(getActivity(), false, true);
                 // 调用系统播放,按键可用,视频播放进度上会有问题
                 try{
-                    if(topVideoUrl != null && !("").equals(topVideoUrl)) {
-                        GSYVideoManager.releaseAllVideos();
-                        Intent intent = new Intent();
-                        intent.setAction(Intent.ACTION_VIEW);
-                        String type = "video/*";
-                        Uri uri = Uri.parse(topVideoUrl);
-                        intent.setDataAndType(uri,type);
-                        getContext().startActivity(intent);
-                    } else {
-                        Toast.makeText(getContext(), "请先设置视频地址", Toast.LENGTH_LONG).show();
-                    }
+                    // topVideoUrl = "http://tengdamy.cn/video/video2.mp4";
+                    GSYVideoManager.releaseAllVideos();
+                    openSystemVideo(topVideoUrl);
                 } catch(Exception e) {
 
                 }
@@ -371,6 +374,21 @@ public class SlideListFragment extends Fragment {
         if(topVideoUrl != null && !("").equals(topVideoUrl)) {
             detailPlayer.setUp(topVideoUrl, true, "");
             detailPlayer.startPlayLogic();
+        } else {
+            Toast.makeText(getContext(), "请先设置视频地址", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void openSystemVideo(String url) throws Exception {
+        if(topVideoUrl != null && !("").equals(topVideoUrl)) {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            String type = "video/*";
+            Uri uri = Uri.parse(url);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(uri,type);
+            getContext().startActivity(intent);
         } else {
             Toast.makeText(getContext(), "请先设置视频地址", Toast.LENGTH_LONG).show();
         }

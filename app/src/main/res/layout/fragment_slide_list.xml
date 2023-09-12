@@ -61,6 +61,39 @@
                     android:layout_marginTop="42dp"
                     android:layout_width="533dp"
                     android:layout_height="36dp"/>
+
+                <TextView
+                    android:id="@+id/hotel_name"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="52dp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/light_blue_A400"
+                    android:textAlignment="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:letterSpacing="0.3"
+                    />
+
+                <TextView
+                    android:id="@+id/main_title"
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="52dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="63dp"
+                    android:layout_marginEnd="25dp"
+                    android:textColor="@color/white"
+                    android:textAlignment="textEnd"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:letterSpacing="0.1"
+                />
             </RelativeLayout>
             <LinearLayout
                 android:layout_marginLeft="20dp"
@@ -81,6 +114,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                     </com.outmao.xcprojector.video.VideoView>
+
+                    <TextView
+                        android:id="@+id/video_view_4_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="25dp"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/white"
+                        android:textAlignment="textEnd"
+                        android:layout_alignParentEnd="true"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:letterSpacing="0.1"
+                        />
+
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/rl_view5"
@@ -95,6 +147,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                     </com.outmao.xcprojector.video.VideoView>
+
+                    <TextView
+                        android:id="@+id/video_view_5_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginEnd="25dp"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/white"
+                        android:textAlignment="textEnd"
+                        android:layout_alignParentEnd="true"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:letterSpacing="0.1"
+                        />
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/rl_view6"
@@ -108,6 +178,25 @@
                         android:foreground="@drawable/fg_video_main2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/video_view_6_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginEnd="25dp"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@color/white"
+                            android:textAlignment="textEnd"
+                            android:layout_alignParentEnd="true"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:letterSpacing="0.1"
+                            />
+
                     </com.outmao.xcprojector.video.VideoView>
                 </RelativeLayout>
             </LinearLayout>
@@ -134,6 +223,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
+                <TextView
+                    android:id="@+id/video_view_2_title"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/video_view_2_subtitle"
+                    android:layout_marginEnd="25dp"
+                    android:textColor="@color/white"
+                    android:textAlignment="textEnd"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:letterSpacing="0.1"
+                />
+                <TextView
+                    android:id="@+id/video_view_2_subtitle"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="25dp"
+                    android:textColor="@color/white"
+                    android:textAlignment="textEnd"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textSize="14sp"
+                    android:letterSpacing="0.1"
+                />
+
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rl_view3"
@@ -148,6 +268,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                 </com.outmao.xcprojector.video.VideoView>
+
+                <TextView
+                    android:id="@+id/video_view_3_title"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/video_view_3_subtitle"
+                    android:layout_marginEnd="25dp"
+                    android:textColor="@color/white"
+                    android:textAlignment="textEnd"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:letterSpacing="0.1"
+                    />
+                <TextView
+                    android:id="@+id/video_view_3_subtitle"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="25dp"
+                    android:textColor="@color/white"
+                    android:textAlignment="textEnd"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textSize="14sp"
+                    android:letterSpacing="0.1"
+                    />
             </RelativeLayout>
         </LinearLayout>
 

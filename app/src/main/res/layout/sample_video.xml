@@ -108,6 +108,15 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical" />
 
+    <!--<ImageView
+        android:id="@+id/start"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:stateListAnimator="@null"
+        android:background="@drawable/ic_play"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical" />-->
 
     <ImageView
         android:id="@+id/small_close"
