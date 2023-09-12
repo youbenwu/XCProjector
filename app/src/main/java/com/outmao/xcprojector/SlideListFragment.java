@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.outmao.xcprojector.api.HttpApiService;
+import com.outmao.xcprojector.api.models.AccountStatusData;
 import com.outmao.xcprojector.api.models.SlideInfo;
 import com.outmao.xcprojector.api.models.SlideListData;
 import com.outmao.xcprojector.api.models.SlideListSubSlides;
@@ -114,6 +115,7 @@ public class SlideListFragment extends Fragment {
                     public void onFail(YYResponseData<SlideListData> responseData) {
                         super.onFail(responseData);
                         Toast.makeText(SlideListFragment.this.getContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
+                        checkState();
                         if(AppConfig.testData){
                             showTestData();
                         }
@@ -138,6 +140,38 @@ public class SlideListFragment extends Fragment {
                     }
 
                 });
+    }
+
+    private void checkState(){
+        HttpApiService.getInstance().account_status()
+                .subscribe(new RxSubscriber<YYResponseData<AccountStatusData>>() {
+                    @Override
+                    public void onFail(YYResponseData<AccountStatusData> responseData) {
+                        super.onFail(responseData);
+                        Log.d("account_status接口返回", responseData.toString());
+                    }
+
+                    @Override
+                    public void onSuccess(YYResponseData<AccountStatusData> responseData) {
+                        super.onSuccess(responseData);
+                        Log.d("account_status接口返回", responseData.toString());
+                        if(responseData.isSuccess()){
+                            if(responseData.getData().getStatus()==0){
+                                //未激活
+                                goActivate();
+                                getActivity().finish();
+                                return;
+                            }
+                        }
+                    }
+                });
+    }
+
+    //去激活设备
+    private void goActivate(){
+        Intent intent = new Intent(getActivity(), ActivateActivity.class);
+        startActivity(intent);
+        //finish();
     }
 
 

@@ -114,7 +114,8 @@ public class HomeActivity extends AppCompatActivity {
                     timerHandler.sendMessage(new Message());
                 }
             };
-            timer.schedule(task,1000,600*1000);
+            timer.schedule(task,1000,1*1000);
+            //timer.schedule(task,1000,600*1000);
         }
     }
     private void stopTimer(){
@@ -418,6 +419,13 @@ public class HomeActivity extends AppCompatActivity {
                 });
     }
 
+    //去激活设备
+    private void goActivate(){
+        Intent intent = new Intent(HomeActivity.this, ActivateActivity.class);
+        startActivity(intent);
+        //finish();
+    }
+
     private void checkState(){
         HttpApiService.getInstance().account_status()
                 .subscribe(new RxSubscriber<YYResponseData<AccountStatusData>>() {
@@ -435,7 +443,8 @@ public class HomeActivity extends AppCompatActivity {
                         if(responseData.isSuccess()){
                             if(responseData.getData().getStatus()==0){
                                 //未激活
-                                showCloseDialog();
+                                goActivate();
+                                finish();
                                 return;
                             }
                             if(responseData.getData().getDetail_info().getClose_status()==1){

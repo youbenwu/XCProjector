@@ -118,7 +118,7 @@
     </LinearLayout>
 
     <ImageView
-        android:src="@mipmap/dialog_bg_bottom"
+        android:background="@mipmap/dialog_bg_bottom"
         android:layout_width="match_parent"
         android:layout_height="24dp"/>
 
