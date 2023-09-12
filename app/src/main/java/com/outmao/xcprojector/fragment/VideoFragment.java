@@ -141,7 +141,8 @@ enum OTHER_APPLICATION {
     MANG_GUO_TV("com.starcor.mango"),
     BES_TV("com.tv.kuaisou"),
     KU_GOU_YIN_YUE_DANG_BEI("com.dangbei.dbmusic"),
-    DANG_BEI_APP_STORE("com.dangbei.mimir.lightos.appstore");
+    DANG_BEI_APP_STORE("com.dangbei.mimir.lightos.appstore"),
+    SYSTEM_SETTINGS("com.htc.htcpublicsettings");
 
     private String packageName;
 
