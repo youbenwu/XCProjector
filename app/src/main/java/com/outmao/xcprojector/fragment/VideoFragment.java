@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.outmao.xcprojector.HomeActivity;
 import com.outmao.xcprojector.R;
 
 import java.util.List;
@@ -119,6 +120,7 @@ public class VideoFragment  extends Fragment {
             }
         }catch(Exception e) {
             e.printStackTrace();
+            Toast.makeText(getContext(), "暂无未支持该应用", Toast.LENGTH_LONG).show();
             Log.d("OtherApplication Error: ", "otherApplication.getPackageName()");
         }
     }
