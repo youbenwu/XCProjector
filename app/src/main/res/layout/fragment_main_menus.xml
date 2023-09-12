@@ -35,18 +35,18 @@
             android:layout_height="100dp"/>
 
         <com.outmao.xcprojector.views.MenuItemView
-            android:id="@+id/menu_setup"
-            app:title="设  置"
-            app:subtitle="SETUP"
+            android:id="@+id/menu_movies"
+            app:title="影  视"
+            app:subtitle="MOVIES"
             android:layout_marginLeft="83dp"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="100dp"/>
 
         <com.outmao.xcprojector.views.MenuItemView
-            android:id="@+id/menu_movies"
-            app:title="影  视"
-            app:subtitle="MOVIES"
+            android:id="@+id/menu_setup"
+            app:title="设  置"
+            app:subtitle="SETUP"
             android:layout_marginLeft="71dp"
             android:layout_alignBottom="@+id/rl_bg"
             android:layout_marginBottom="50dp"
