@@ -20,6 +20,8 @@ public class SlideInfo implements Serializable {
 
     private String sub_title;
 
+    private String hotel_name;
+
     public int getType() {
         return type;
     }
@@ -58,5 +60,13 @@ public class SlideInfo implements Serializable {
 
     public void setSub_title(String sub_title) {
         this.sub_title = sub_title;
+    }
+
+    public String getHotel_name() {
+        return hotel_name;
+    }
+
+    public void setHotel_name(String hotel_name) {
+        this.hotel_name = hotel_name;
     }
 }
