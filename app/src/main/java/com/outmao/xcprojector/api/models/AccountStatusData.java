@@ -19,6 +19,9 @@ public class AccountStatusData implements Serializable {
 
     private AccountStatusInfo detail_info;
 
+    //0 未激活 1 已激活
+    private int status;
+
     public String getDevice_sn() {
         return device_sn;
     }
@@ -34,4 +37,14 @@ public class AccountStatusData implements Serializable {
     public void setDetail_info(AccountStatusInfo detail_info) {
         this.detail_info = detail_info;
     }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+
 }

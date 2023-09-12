@@ -129,7 +129,7 @@ public class ActivateActivity extends AppCompatActivity {
                         super.onSuccess(responseData);
                         if(responseData.isSuccess()){
                             //成功
-                            setActived();
+                            setNewActived();
                             Intent intent = new Intent(ActivateActivity.this, ActivateSuccessActivity.class);
                             startActivity(intent);
                         }else{
@@ -146,8 +146,8 @@ public class ActivateActivity extends AppCompatActivity {
     }
 
     //设备激活
-    private void setActived(){
-        SharepreferencesUtils.getShareInstance().putString(AppConfig.ACTIVE_STATUS_KEY,"1");
+    private void setNewActived(){
+        SharepreferencesUtils.getShareInstance().putString(AppConfig.NEW_ACTIVE,"1");
     }
 
     private void onClickWify(){

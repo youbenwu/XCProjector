@@ -55,16 +55,13 @@ public class HomeActivity extends AppCompatActivity {
 
     private ActivityHomeBinding binding;
 
-
     private int pageIndex=0;
 
     private Timer timer;
 
     private Dialog closeDialog;
 
-    private boolean isCheckPwd=false;
-
-    private boolean isWeaterQuery=false;
+    private boolean isSetPwd=false;
 
 
     @Override
@@ -80,10 +77,7 @@ public class HomeActivity extends AppCompatActivity {
         public boolean handleMessage(@NonNull Message msg) {
             online();
             checkState();
-            if(!isWeaterQuery){
-                isWeaterQuery=true;
-                weaterQuery();
-            }
+            weaterQuery();
             return false;
         }
     });
@@ -130,7 +124,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-
         String city="广州";
         if(BaiduLocationManager.manager.location!=null){
             city=BaiduLocationManager.manager.location.getCity();
@@ -141,7 +134,6 @@ public class HomeActivity extends AppCompatActivity {
                     public void onFail(WeaterResult responseData) {
                         super.onFail(responseData);
                         Log.d("weatherQuery",responseData.toString());
-                        isWeaterQuery=false;
                     }
 
                     @Override
@@ -255,13 +247,9 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-
-
-
     private void onClickSetting(){
-        String pwd= SharepreferencesUtils.getShareInstance().getString(AppConfig.PWD);
-        if(pwd==null){
-            checkNewPwd();
+        if(isNewActived()){
+            setPwd();
             return;
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
@@ -352,35 +340,53 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onFail(YYResponseData<AccountStatusData> responseData) {
                         super.onFail(responseData);
+                        Log.d("account_status接口返回", responseData.toString());
                         Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
-                        checkNewPwd();
                     }
 
                     @Override
                     public void onSuccess(YYResponseData<AccountStatusData> responseData) {
                         super.onSuccess(responseData);
-                        Log.d("接口返回", responseData.toString());
+                        Log.d("account_status接口返回", responseData.toString());
                         if(responseData.isSuccess()){
+                            if(responseData.getData().getStatus()==0){
+                                //未激活
+                                showCloseDialog();
+                                return;
+                            }
                             if(responseData.getData().getDetail_info().getClose_status()==1){
                                 //欠费
-                                if(closeDialog==null) {
-                                    showCloseDialog();
-                                }else{
-                                    closeDialog.cancel();
-                                    closeDialog=null;
-                                }
+                                showCloseDialog();
                                 return;
+                            }
+                            if(closeDialog!=null){
+                                closeDialog.cancel();
+                                closeDialog=null;
+                            }
+                            if(isNewActived()){
+                                setPwd();
                             }
                         }else{
                             Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
                         }
-                        checkNewPwd();
                     }
 
                 });
     }
 
+    private boolean isNewActived(){
+        String isNew=SharepreferencesUtils.getShareInstance().getString(AppConfig.NEW_ACTIVE);
+        return isNew!=null&&isNew.equals("1");
+    }
+    private void setNotNewActived(){
+        SharepreferencesUtils.getShareInstance().putString(AppConfig.NEW_ACTIVE,"0");
+    }
+
     private void showCloseDialog(){
+        if(closeDialog!=null){
+            closeDialog.cancel();
+            closeDialog=null;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         final AlertDialog dialog = builder.create();
         dialog.setCancelable(false);
@@ -395,30 +401,13 @@ public class HomeActivity extends AppCompatActivity {
         });
         dialog.setView(dialogView);
         dialog.show();
-
         closeDialog=dialog;
     }
 
 
-    private void checkNewPwd(){
+    private void setPwd(){
 
         if(closeDialog!=null){
-            return;
-        }
-
-        if(isCheckPwd){
-            return;
-        }
-
-        if(SharepreferencesUtils.getShareInstance().getString(AppConfig.ACTIVE_STATUS_KEY)==null){
-            return;
-        }
-
-        isCheckPwd=true;
-
-        String pwd= SharepreferencesUtils.getShareInstance().getString(AppConfig.PWD);
-        if(pwd!=null){
-            //checkPwd();
             return;
         }
 
@@ -478,7 +467,7 @@ public class HomeActivity extends AppCompatActivity {
                                 Log.d("接口返回", responseData.toString());
                                 if(responseData.isSuccess()){
                                     dialog.cancel();
-                                    SharepreferencesUtils.getShareInstance().putString(AppConfig.PWD,pwd);
+                                    setNotNewActived();
                                     checkPwd();
                                 }else{
                                     Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
@@ -495,9 +484,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void checkPwd(){
-        String ischeck=SharepreferencesUtils.getShareInstance().getString(AppConfig.CHECK_PWD);
-        if(ischeck!=null)
-            return;
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         final AlertDialog dialog = builder.create();
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -554,7 +540,6 @@ public class HomeActivity extends AppCompatActivity {
                                 Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
                                 if(responseData.isSuccess()){
                                     dialog.cancel();
-                                    SharepreferencesUtils.getShareInstance().putString(AppConfig.CHECK_PWD,"1");
                                 }
                             }
 

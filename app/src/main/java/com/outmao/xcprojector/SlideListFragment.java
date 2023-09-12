@@ -451,4 +451,6 @@ public class SlideListFragment extends Fragment {
         GSYVideoManager.onPause();
     }
 
+
+
 }

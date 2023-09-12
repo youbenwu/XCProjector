@@ -264,75 +264,75 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void checkNewPwd(){
-        String pwd=SharepreferencesUtils.getShareInstance().getString(AppConfig.PWD);
-        if(pwd==null){
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            final AlertDialog dialog = builder.create();
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            View dialogView =  View.inflate(MainActivity.this, R.layout.dialog, null);
-            dialog.setView(dialogView);
-            dialog.show();
-            // 获取布局控件
-            TextView titleTv =(TextView) dialogView.findViewById(R.id.tv_title);
-            TextView closeTv =(TextView) dialogView.findViewById(R.id.tv_close);
-            TextView msgTv =(TextView) dialogView.findViewById(R.id.tv_msg);
-            TextView submsgTv =(TextView) dialogView.findViewById(R.id.tv_sub_msg);
-            TextView okTv =(TextView) dialogView.findViewById(R.id.btn_ok);
-            TextView cancelTv =(TextView) dialogView.findViewById(R.id.btn_cancel);
-            EditText pwdEt =(EditText) dialogView.findViewById(R.id.et_pwd);
-            titleTv.setText("尊敬的用户");
-            msgTv.setText("欢迎你使用喵影互娱");
-            submsgTv.setText("为了你的安全使用\n请先设定您的“设置”新密码");
-            closeTv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.cancel();
-                }
-            });
-            cancelTv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.cancel();
-                }
-            });
-            okTv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String pwd=pwdEt.getText().toString().trim();
-                    if(pwd.length()==0){
-                        Toast.makeText(MainActivity.this, "请输入密码", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    okTv.setEnabled(false);
-                    HttpApiService.getInstance().account_pwd(pwd)
-                            .subscribe(new RxSubscriber<YYResponseData<Object>>() {
-                                @Override
-                                public void onFail(YYResponseData<Object> responseData) {
-                                    super.onFail(responseData);
-                                    okTv.setEnabled(true);
-                                    Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-
-                                @Override
-                                public void onSuccess(YYResponseData<Object> responseData) {
-                                    super.onSuccess(responseData);
-                                    okTv.setEnabled(true);
-                                    Log.d("接口返回", responseData.toString());
-                                    if(responseData.isSuccess()){
-                                        dialog.cancel();
-                                        SharepreferencesUtils.getShareInstance().putString(AppConfig.PWD,pwd);
-                                        checkPwd();
-                                    }else{
-                                        Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                }
-
-
-                            });
-                }
-            });
-
-        }
+//        String pwd=SharepreferencesUtils.getShareInstance().getString(AppConfig.PWD);
+//        if(pwd==null){
+//            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//            final AlertDialog dialog = builder.create();
+//            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//            View dialogView =  View.inflate(MainActivity.this, R.layout.dialog, null);
+//            dialog.setView(dialogView);
+//            dialog.show();
+//            // 获取布局控件
+//            TextView titleTv =(TextView) dialogView.findViewById(R.id.tv_title);
+//            TextView closeTv =(TextView) dialogView.findViewById(R.id.tv_close);
+//            TextView msgTv =(TextView) dialogView.findViewById(R.id.tv_msg);
+//            TextView submsgTv =(TextView) dialogView.findViewById(R.id.tv_sub_msg);
+//            TextView okTv =(TextView) dialogView.findViewById(R.id.btn_ok);
+//            TextView cancelTv =(TextView) dialogView.findViewById(R.id.btn_cancel);
+//            EditText pwdEt =(EditText) dialogView.findViewById(R.id.et_pwd);
+//            titleTv.setText("尊敬的用户");
+//            msgTv.setText("欢迎你使用喵影互娱");
+//            submsgTv.setText("为了你的安全使用\n请先设定您的“设置”新密码");
+//            closeTv.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    dialog.cancel();
+//                }
+//            });
+//            cancelTv.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    dialog.cancel();
+//                }
+//            });
+//            okTv.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    String pwd=pwdEt.getText().toString().trim();
+//                    if(pwd.length()==0){
+//                        Toast.makeText(MainActivity.this, "请输入密码", Toast.LENGTH_LONG).show();
+//                        return;
+//                    }
+//                    okTv.setEnabled(false);
+//                    HttpApiService.getInstance().account_pwd(pwd)
+//                            .subscribe(new RxSubscriber<YYResponseData<Object>>() {
+//                                @Override
+//                                public void onFail(YYResponseData<Object> responseData) {
+//                                    super.onFail(responseData);
+//                                    okTv.setEnabled(true);
+//                                    Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
+//                                }
+//
+//                                @Override
+//                                public void onSuccess(YYResponseData<Object> responseData) {
+//                                    super.onSuccess(responseData);
+//                                    okTv.setEnabled(true);
+//                                    Log.d("接口返回", responseData.toString());
+//                                    if(responseData.isSuccess()){
+//                                        dialog.cancel();
+//                                        SharepreferencesUtils.getShareInstance().putString(AppConfig.PWD,pwd);
+//                                        checkPwd();
+//                                    }else{
+//                                        Toast.makeText(getBaseContext(), responseData.getMessage(), Toast.LENGTH_LONG).show();
+//                                    }
+//                                }
+//
+//
+//                            });
+//                }
+//            });
+//
+//        }
 
     }
 
