@@ -64,6 +64,8 @@ public class SlideListFragment extends Fragment {
 
     private ImageView topVideoCover;
 
+    private boolean isQuitScreen = false;
+
     public SlideListFragment() {
     }
 
@@ -204,7 +206,9 @@ public class SlideListFragment extends Fragment {
                     Log.d("VideoPlayer url: ", info.getVideo_url_txt());
 
                     if(info.getThumbs_txt() != null && info.getThumbs_txt().size() > 0 && !("").equals(info.getThumbs_txt().get(0))) {
+                        // topVideoUrl+"?vframe/jpg/offset/0/" info.getThumbs_txt().get(0)
                         Glide.with(this).load(info.getThumbs_txt().get(0)).centerCrop().into(topVideoCover);
+                        detailPlayer.setThumbImageView(topVideoCover);
                     }
                     binding.rlView1.setTag(info.getId());
                     binding.rlView1.setVisibility(View.VISIBLE);
@@ -220,6 +224,8 @@ public class SlideListFragment extends Fragment {
                     binding.videoView1Image.setTag(info.getId());
                     binding.videoView1Image.setTag(info.getId());
                     binding.rlView1.setVisibility(View.VISIBLE);
+
+                    GSYVideoManager.onPause();
                 }
 
             }
@@ -283,10 +289,6 @@ public class SlideListFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentSlideListBinding.inflate(inflater, container, false);
 
-        //视频封面ImageView
-        topVideoCover = new ImageView(getActivity());
-        topVideoCover.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
         Log.d("VideoPlayer TYPE: ", topVideoType + "");
         detailPlayer = binding.videoView1;
 
@@ -338,9 +340,12 @@ public class SlideListFragment extends Fragment {
         //外部辅助的旋转，帮助全屏
         orientationUtils = new OrientationUtils(getActivity(), detailPlayer);
 
+        //视频封面ImageView
+        topVideoCover = new ImageView(getActivity());
+        topVideoCover.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
         GSYVideoOptionBuilder gsyVideoOption = new GSYVideoOptionBuilder();
         gsyVideoOption
-                .setThumbImageView(topVideoCover)
                 .setIsTouchWiget(false)
                 .setRotateViewAuto(false)
                 .setLockLand(false)
@@ -348,7 +353,9 @@ public class SlideListFragment extends Fragment {
                 .setShowFullAnimation(false)
                 .setNeedLockFull(false)
                 .setCacheWithPlay(false)
-                .setVideoTitle("测试视频")
+                .setVideoTitle("")
+                .setHideKey(false)
+                .setLooping(true)
                 .setVideoAllCallBack(new GSYSampleCallBack() {
                     @Override
                     public void onPrepared(String url, Object... objects) {
@@ -368,22 +375,24 @@ public class SlideListFragment extends Fragment {
                         super.onAutoComplete(url, objects);
                         // 播放完成设置
                         TvVideoPlayer.setPlayComplete(true);
+
                     }
 
                     @Override
                     public void onQuitFullscreen(String url, Object... objects) {
                         super.onQuitFullscreen(url, objects);
-
+//                        GSYVideoManager.releaseAllVideos();
+//                        detailPlayer.startPlayLogic();
+                        Log.d("AAA, ", "CCCCCCCC");
 //                        if (orientationUtils != null) {
 //                            orientationUtils.backToProtVideo();
 //                        }
                     }
 
                     @Override
-                    public void onQuitSmallWidget(String url, Object... objects) {
-                        super.onQuitSmallWidget(url, objects);
-                        GSYVideoManager.onPause();
-
+                    public void onComplete(String url, Object... objects) {
+                        Log.d("AAA, ", "CCCCCCCCB");
+                        isQuitScreen = true;
                     }
                 }).setLockClickListener(new LockClickListener() {
                     @Override
@@ -433,12 +442,6 @@ public class SlideListFragment extends Fragment {
         });
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        GSYVideoManager.onPause();
-    }
-
     /**
      * 返回是否全屏
      * @return
@@ -450,14 +453,25 @@ public class SlideListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+
+        if(isQuitScreen && topVideoType == 2 && topVideoUrl != null && !("").equals(topVideoUrl)) {
+            isQuitScreen = false;
+            detailPlayer.setUp(topVideoUrl, true, "");
+            detailPlayer.startPlayLogic();
+        } else {
+
+        }
     }
+
+
 
     public void onPageSelected(boolean selected){
         if(selected){
 
         }else{
             //detailPlayer.stopVideo();
-            GSYVideoManager.onPause();
+            // GSYVideoManager.onPause();
         }
     }
 
@@ -495,10 +509,12 @@ public class SlideListFragment extends Fragment {
                 });
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
-        //GSYVideoManager.onResume();
+        // GSYVideoManager.onResume();
 
     }
 
@@ -511,7 +527,7 @@ public class SlideListFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        GSYVideoManager.onPause();
+         GSYVideoManager.onPause();
     }
 
 }
