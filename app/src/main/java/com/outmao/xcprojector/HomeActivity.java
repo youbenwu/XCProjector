@@ -18,6 +18,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -73,6 +75,19 @@ public class HomeActivity extends AppCompatActivity {
         init();
     }
 
+    private final Handler timerHandler=new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            online();
+            checkState();
+            if(!isWeaterQuery){
+                isWeaterQuery=true;
+                weaterQuery();
+            }
+            return false;
+        }
+    });
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -86,12 +101,7 @@ public class HomeActivity extends AppCompatActivity {
             TimerTask task=new TimerTask() {
                 @Override
                 public void run() {
-                    online();
-                    checkState();
-                    if(!isWeaterQuery){
-                        isWeaterQuery=true;
-                        weaterQuery();
-                    }
+                    timerHandler.sendMessage(new Message());
                 }
             };
             timer.schedule(task,1000,600*1000);
