@@ -29,6 +29,7 @@ import android.text.method.TransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -307,6 +308,10 @@ public class HomeActivity extends AppCompatActivity {
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         final AlertDialog dialog = builder.create();
+        Window window = dialog.getWindow();
+        int width = getResources().getDisplayMetrics().widthPixels;
+        int height = getResources().getDisplayMetrics().heightPixels;
+        window.setLayout(width/2,height/2);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         View dialogView =  View.inflate(HomeActivity.this, R.layout.dialog, null);
         dialog.setView(dialogView);
@@ -511,6 +516,10 @@ public class HomeActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         final AlertDialog dialog = builder.create();
+        Window window = dialog.getWindow();
+        int width = getResources().getDisplayMetrics().widthPixels;
+        int height = getResources().getDisplayMetrics().heightPixels;
+        window.setLayout(width/2,height/2);
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         View dialogView =  View.inflate(HomeActivity.this, R.layout.dialog, null);
