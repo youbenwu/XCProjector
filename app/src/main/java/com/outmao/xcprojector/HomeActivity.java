@@ -203,7 +203,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Calendar calendar=Calendar.getInstance();
         SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat format2=new SimpleDateFormat("HH-mm-ss");
+        SimpleDateFormat format2=new SimpleDateFormat("HH:mm:ss");
         int week=calendar.get(Calendar.DAY_OF_WEEK);
         String w=week==1?"周日":week==2?"周一":week==3?"周二":week==4?"周三":week==5?"周四":week==6?"周五":week==7?"周六":"周六";
         String time=format.format(calendar.getTime())+" "+ w+" "+format2.format(calendar.getTime());

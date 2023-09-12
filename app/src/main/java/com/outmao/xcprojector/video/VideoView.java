@@ -61,6 +61,7 @@ public class VideoView extends RelativeLayout {
         setVideoUrl(videoUrl);
         setImageUrls(imageUrls);
         if(videoUrl!=null&&(imageUrls==null||imageUrls.size()==0)){
+            //Glide.with(this).load(videoUrl+"?vframe/jpg/offset/0/").centerCrop().into(imageView);
             loadVideoImage();
         }
 
