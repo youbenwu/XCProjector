@@ -26,9 +26,12 @@ import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 
 public class HomeFragment extends Fragment {
@@ -80,7 +83,12 @@ public class HomeFragment extends Fragment {
                 Log.d("onPageSelected",position+"");
                 super.onPageSelected(position);
                 SlidesAdapter adapter=(SlidesAdapter)binding.viewPager.getAdapter();
-                adapter.getFragment(position).onPageSelected();
+                adapter.getFragments().forEach(new BiConsumer<String, SlideListFragment>() {
+                    @Override
+                    public void accept(String s, SlideListFragment slideListFragment) {
+                        slideListFragment.onPageSelected(s.equals(position+""));
+                    }
+                });
             }
         });
     }
@@ -122,6 +130,9 @@ public class HomeFragment extends Fragment {
             return _fragments.get(position+"");
         }
 
+        public Map<String, SlideListFragment> getFragments() {
+            return _fragments;
+        }
     }
 
     private void loadData(){

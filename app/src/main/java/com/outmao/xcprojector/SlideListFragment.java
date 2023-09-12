@@ -418,7 +418,7 @@ public class SlideListFragment extends Fragment {
         super.onStart();
     }
 
-    public void onPageSelected(){
+    public void onPageSelected(boolean selected){
 
     }
 
