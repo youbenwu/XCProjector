@@ -46,7 +46,7 @@
 <!--                    android:foreground="@drawable/fg_video_main"-->
 <!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="match_parent"/>-->
-                <com.outmao.xcprojector.video.TvVideoPlayer
+                <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
                     android:id="@+id/video_view1"
                     android:paddingLeft="19dp"
                     android:paddingRight="15dp"
