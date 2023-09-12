@@ -63,6 +63,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private boolean isSetPwd=false;
 
+    private Timer timer2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +84,19 @@ public class HomeActivity extends AppCompatActivity {
         }
     });
 
+    private final Handler timerHandler2=new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            initHeader();
+            return false;
+        }
+    });
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         stopTimer();
+        stopTimer2();
     }
 
     private void startTimer(){
@@ -108,6 +119,25 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void startTimer2(){
+
+        if(timer2==null){
+            timer2=new Timer();
+            TimerTask task=new TimerTask() {
+                @Override
+                public void run() {
+                    timerHandler2.sendMessage(new Message());
+                }
+            };
+            timer2.schedule(task,1000,1000);
+        }
+    }
+    private void stopTimer2(){
+        if(timer2!=null){
+            timer2.cancel();
+            timer2=null;
+        }
+    }
 
 
     private void weaterQuery(){
@@ -162,7 +192,7 @@ public class HomeActivity extends AppCompatActivity {
         initMenus();
         initButtons();
         startTimer();
-
+        startTimer2();
     }
 
     private void initHeader(){
