@@ -56,7 +56,7 @@ public interface HttpApiServiceInterface {
  //广告详情
 // public final static String SLIDE_INFO = "slide-info";
  @GET(HttpApiServiceUrl.SLIDE_INFO)
- Observable<YYResponseData<Object>> account_status(@Query("id") String id);
+ Observable<YYResponseData<Object>> slide_info(@Query("id") String id);
 
 
 }

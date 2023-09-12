@@ -66,9 +66,9 @@ public class HttpApiService {
         return ObservableHelper.subscribeOn(result);
     }
 
-    public Observable<YYResponseData<Object>> account_status(String id){
+    public Observable<YYResponseData<Object>> slide_info(String id){
         HttpApiServiceInterface api = YYHttpCreator.createService(HttpApiServiceInterface.class);
-        Observable<YYResponseData<Object>> result = api.account_status(id);
+        Observable<YYResponseData<Object>> result = api.slide_info(id);
         return ObservableHelper.subscribeOn(result);
     }
 

@@ -16,7 +16,10 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.outmao.xcprojector.R;
+import com.outmao.xcprojector.api.HttpApiService;
 import com.outmao.xcprojector.image.ImagePagerActivity;
+import com.outmao.xcprojector.network.RxSubscriber;
+import com.outmao.xcprojector.network.YYResponseData;
 import com.outmao.xcprojector.views.XfermodeImageView;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
@@ -107,7 +110,6 @@ public class VideoView extends RelativeLayout {
 
     public void setVideoUrl(String videoUrl){
         this.videoUrl=videoUrl;
-
         if(videoUrl!=null&&videoUrl.length()>0){
             playButton.setVisibility(VISIBLE);
         }else{
@@ -152,11 +154,6 @@ public class VideoView extends RelativeLayout {
         playButton=findViewById(R.id.iv_play);
         detailPlayer=findViewById(R.id.playerView);
         playButton.setVisibility(INVISIBLE);
-
-//        videoCover = new ImageView(getContext());
-//        videoCover.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//
-//        initVideoPlayer();
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,14 +161,31 @@ public class VideoView extends RelativeLayout {
                     Intent intent = new Intent(getContext(), VideoPlayActivity.class);
                     intent.putExtra("url",videoUrl);
                     getContext().startActivity(intent);
-
                 }else if(imageUrls!=null&&imageUrls.size()>0){
                     Intent intent = new Intent(getContext(), ImagePagerActivity.class);
                     intent.putExtra("data",new Gson().toJson(imageUrls));
                     getContext().startActivity(intent);
                 }
+                //后台统计数据
+                slide_info();
             }
         });
+    }
+
+    private void slide_info(){
+        HttpApiService.getInstance().slide_info(getTag()+"")
+                .subscribe(new RxSubscriber<YYResponseData<Object>>() {
+                    @Override
+                    public void onFail(YYResponseData<Object> responseData) {
+                        super.onFail(responseData);
+                        Log.d("slide_info接口返回", responseData.toString());
+                    }
+                    @Override
+                    public void onSuccess(YYResponseData<Object> responseData) {
+                        super.onSuccess(responseData);
+                        Log.d("slide_info接口返回", responseData.toString());
+                    }
+                });
     }
 
     private void initVideoPlayer() {

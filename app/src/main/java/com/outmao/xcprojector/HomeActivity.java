@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -43,6 +44,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -50,6 +53,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private int pageIndex=0;
+
+    private Timer timer;
+
+    private Dialog closeDialog;
+
+    private boolean isCheckPwd=false;
 
 
     @Override
@@ -60,11 +69,33 @@ public class HomeActivity extends AppCompatActivity {
         init();
     }
 
+    private void startTimer(){
+
+        if(timer==null){
+            timer=new Timer();
+            TimerTask task=new TimerTask() {
+                @Override
+                public void run() {
+                    online();
+                    checkState();
+                }
+            };
+            timer.schedule(task,0,600*1000);
+        }
+    }
+    private void stopTimer(){
+        if(timer!=null){
+            timer.cancel();
+            timer=null;
+        }
+    }
+
     private void init(){
         initHeader();
         initMenus();
         initButtons();
         checkState();
+        startTimer();
     }
 
     private void initHeader(){
@@ -224,6 +255,21 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    private void online(){
+        HttpApiService.getInstance().account_line()
+                .subscribe(new RxSubscriber<YYResponseData<Object>>() {
+                    @Override
+                    public void onFail(YYResponseData<Object> responseData) {
+                        super.onFail(responseData);
+                        Log.d("account_line接口返回", responseData.toString());
+                    }
+                    @Override
+                    public void onSuccess(YYResponseData<Object> responseData) {
+                        super.onSuccess(responseData);
+                        Log.d("account_line接口返回", responseData.toString());
+                    }
+                });
+    }
 
     private void checkState(){
         HttpApiService.getInstance().account_status()
@@ -242,7 +288,12 @@ public class HomeActivity extends AppCompatActivity {
                         if(responseData.isSuccess()){
                             if(responseData.getData().getDetail_info().getClose_status()==1){
                                 //欠费
-                                showCloseDialog();
+                                if(closeDialog==null) {
+                                    showCloseDialog();
+                                }else{
+                                    closeDialog.cancel();
+                                    closeDialog=null;
+                                }
                                 return;
                             }
                         }else{
@@ -260,8 +311,17 @@ public class HomeActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         View dialogView =  View.inflate(HomeActivity.this, R.layout.dialog2, null);
+        TextView btn_ok =(TextView) dialogView.findViewById(R.id.btn_ok);
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkState();
+            }
+        });
         dialog.setView(dialogView);
         dialog.show();
+
+        closeDialog=dialog;
     }
 
 
