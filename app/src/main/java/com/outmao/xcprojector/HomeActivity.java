@@ -646,6 +646,11 @@ public class HomeActivity extends AppCompatActivity {
                     binding.ibBack.requestFocus();
                     return true;
                 }
+                view=((HomeFragment) fragment).getViewById(R.id.video_view1_image);
+                if(view!=null&&view.isFocused()){
+                    binding.ibBack.requestFocus();
+                    return true;
+                }
             }
 
         } else if(event.getKeyCode()==KeyEvent.KEYCODE_BACK) {

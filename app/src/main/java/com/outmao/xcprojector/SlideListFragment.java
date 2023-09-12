@@ -167,12 +167,13 @@ public class SlideListFragment extends Fragment {
                     if(info.getThumbs_txt() != null && info.getThumbs_txt().size() > 0 && !("").equals(info.getThumbs_txt().get(0))) {
                         Glide.with(this).load(info.getThumbs_txt().get(0)).centerCrop().into(topVideoCover);
                     }
+                    binding.rlView1.setTag(info.getId());
                     binding.rlView1.setVisibility(View.VISIBLE);
                 } else {
                     binding.videoView1.setVisibility(View.GONE);
                     binding.videoView1Image.setVisibility(View.VISIBLE);
                     binding.videoView1Image.initData(info.getVideo_url_txt(),info.getThumbs_txt());
-
+                    binding.videoView1Image.setTag(info.getId());
                     binding.rlView1.setVisibility(View.VISIBLE);
                 }
 
@@ -186,6 +187,7 @@ public class SlideListFragment extends Fragment {
                     binding.videoView2Title.setText(info.getTitle() == null ? "" : info.getTitle());
                     binding.videoView2Subtitle.setText(info.getSub_title() == null ? "" : info.getSub_title());
                     binding.videoView2.initData(info.getVideo_url_txt(),info.getThumbs_txt());
+                    binding.videoView2.setTag(info.getId());
                     binding.rlView2.setVisibility(View.VISIBLE);
                 }
 
@@ -195,6 +197,7 @@ public class SlideListFragment extends Fragment {
                     binding.videoView3Title.setText(info.getTitle() == null ? "" : info.getTitle());
                     binding.videoView3Subtitle.setText(info.getSub_title() == null ? "" : info.getSub_title());
                     binding.videoView3.initData(info.getVideo_url_txt(),info.getThumbs_txt());
+                    binding.videoView3.setTag(info.getId());
                     binding.rlView3.setVisibility(View.VISIBLE);
                 }
 
@@ -203,6 +206,7 @@ public class SlideListFragment extends Fragment {
                     SlideInfo info=data.getSub_slides().getList().get(2);
                     binding.videoView4Title.setText(info.getTitle() == null ? "" : info.getTitle());
                     binding.videoView4.initData(info.getVideo_url_txt(),info.getThumbs_txt());
+                    binding.videoView4.setTag(info.getId());
                     binding.rlView4.setVisibility(View.VISIBLE);
                 }
 
@@ -211,6 +215,7 @@ public class SlideListFragment extends Fragment {
                     SlideInfo info=data.getSub_slides().getList().get(3);
                     binding.videoView5Title.setText(info.getTitle() == null ? "" : info.getTitle());
                     binding.videoView5.initData(info.getVideo_url_txt(),info.getThumbs_txt());
+                    binding.videoView5.setTag(info.getId());
                     binding.rlView5.setVisibility(View.VISIBLE);
                 }
 
@@ -219,6 +224,7 @@ public class SlideListFragment extends Fragment {
                     SlideInfo info=data.getSub_slides().getList().get(4);
                     binding.videoView6Title.setText(info.getTitle() == null ? "" : info.getTitle());
                     binding.videoView6.initData(info.getVideo_url_txt(),info.getThumbs_txt());
+                    binding.videoView6.setTag(info.getId());
                     binding.rlView6.setVisibility(View.VISIBLE);
                 }
 
@@ -407,6 +413,23 @@ public class SlideListFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "请先设置视频地址", Toast.LENGTH_LONG).show();
         }
+        slide_info(binding.rlView1.getTag()+"");
+    }
+
+    private void slide_info(String id){
+        HttpApiService.getInstance().slide_info(id)
+                .subscribe(new RxSubscriber<YYResponseData<Object>>() {
+                    @Override
+                    public void onFail(YYResponseData<Object> responseData) {
+                        super.onFail(responseData);
+                        Log.d("slide_info接口返回", responseData.toString());
+                    }
+                    @Override
+                    public void onSuccess(YYResponseData<Object> responseData) {
+                        super.onSuccess(responseData);
+                        Log.d("slide_info接口返回", responseData.toString());
+                    }
+                });
     }
 
     @Override
