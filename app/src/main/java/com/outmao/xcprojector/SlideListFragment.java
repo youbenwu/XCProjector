@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -57,12 +59,14 @@ public class SlideListFragment extends Fragment {
 
     private OrientationUtils orientationUtils;
 
-    TvVideoPlayer detailPlayer;
+    StandardGSYVideoPlayer detailPlayer;
 
     private String topVideoUrl;
     private int topVideoType = 1;
 
     private ImageView topVideoCover;
+
+    private boolean showUser=true;
 
     public SlideListFragment() {
     }
@@ -103,7 +107,7 @@ public class SlideListFragment extends Fragment {
 
         updateData();
         if(data==null){
-          loadData();
+            loadData();
         }
     }
 
@@ -209,9 +213,9 @@ public class SlideListFragment extends Fragment {
                     binding.rlView1.setTag(info.getId());
                     binding.rlView1.setVisibility(View.VISIBLE);
 
-                    GSYVideoManager.releaseAllVideos();
-                    detailPlayer.setUp(topVideoUrl, true, "");
-                    detailPlayer.startPlayLogic();
+                    if(showUser) {
+                        startPlay();
+                    }
 
                 } else {
                     binding.videoView1.setVisibility(View.GONE);
@@ -348,8 +352,7 @@ public class SlideListFragment extends Fragment {
                 .setShowFullAnimation(false)
                 .setNeedLockFull(false)
                 .setCacheWithPlay(false)
-                .setVideoTitle("")
-                .setHideKey(false)
+                .setVideoTitle("测试视频")
                 .setLooping(true)
                 .setVideoAllCallBack(new GSYSampleCallBack() {
                     @Override
@@ -435,11 +438,11 @@ public class SlideListFragment extends Fragment {
         });
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        GSYVideoManager.onPause();
-    }
+    // @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        GSYVideoManager.onPause();
+//    }
 
     /**
      * 返回是否全屏
@@ -456,12 +459,14 @@ public class SlideListFragment extends Fragment {
 
     public void onPageSelected(boolean selected){
         if(selected){
-
+            showUser=true;
+            startPlay();
         }else{
-            //detailPlayer.stopVideo();
-            GSYVideoManager.onPause();
+            showUser=false;
+            stopPlay();
         }
     }
+
 
 
 
@@ -501,19 +506,69 @@ public class SlideListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //GSYVideoManager.onResume();
+        if(showUser){
+            startPlay();
+        }
+    }
 
+    private Handler playHandler=new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            int action=msg.getData().getInt("action");
+            if(action==PLAY) {
+                if (topVideoUrl != null && topVideoUrl.length() > 0) {
+                    if(detailPlayer.isActivated()){
+                        return false;
+                    }
+                    GSYVideoManager.releaseAllVideos();
+                    detailPlayer.setUp(topVideoUrl, true, "");
+                    detailPlayer.startPlayLogic();
+                }
+            }else if(action==STOP){
+                detailPlayer.onVideoPause();
+            }else if(action==RELEASE){
+                detailPlayer.release();
+            }
+            return false;
+        }
+    });
+
+    public static final int PLAY=0;
+    public static final int STOP=1;
+    public static final int RELEASE=2;
+
+    private void startPlay(){
+        Bundle bundle=new Bundle();
+        bundle.putInt("action",PLAY);
+        Message m=new Message();
+        m.setData(bundle);
+        playHandler.sendMessage(m);
+    }
+
+    private void stopPlay(){
+        Bundle bundle=new Bundle();
+        bundle.putInt("action",STOP);
+        Message m=new Message();
+        m.setData(bundle);
+        playHandler.sendMessage(m);
+    }
+
+    private void releasePlay(){
+        detailPlayer.release();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        GSYVideoManager.releaseAllVideos();
+        //GSYVideoManager.releaseAllVideos();
+        releasePlay();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        GSYVideoManager.onPause();
+        //GSYVideoManager.onPause();
+        stopPlay();
     }
 
 }
