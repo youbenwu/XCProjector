@@ -108,7 +108,7 @@ public class SlideListFragment extends Fragment {
 
 
     private void loadData(){
-        HttpApiService.getInstance().slide_list(1,5)
+        HttpApiService.getInstance().slide_list(page,5)
                 .subscribe(new RxSubscriber<YYResponseData<SlideListData>>() {
                     @Override
                     public void onFail(YYResponseData<SlideListData> responseData) {
@@ -158,17 +158,26 @@ public class SlideListFragment extends Fragment {
                 topVideoUrl = info.getVideo_url_txt();
                 binding.hotelName.setText(info.getHotel_name() == null ? "" : info.getHotel_name());
                 binding.mainTitle.setText(info.getTitle() == null ? "" : info.getTitle());
-                Log.d("VideoPlayer url: ", topVideoType + "");
                 if(topVideoType == 2) {
+                    try {
+                        initVideoPlayer();
+                    } catch(Exception e) {
+
+                    }
                     binding.videoView1Image.setVisibility(View.GONE);
                     binding.videoView1.setVisibility(View.VISIBLE);
                     Log.d("VideoPlayer url: ", info.getVideo_url_txt());
-                    topVideoUrl = info.getVideo_url_txt();
+
                     if(info.getThumbs_txt() != null && info.getThumbs_txt().size() > 0 && !("").equals(info.getThumbs_txt().get(0))) {
                         Glide.with(this).load(info.getThumbs_txt().get(0)).centerCrop().into(topVideoCover);
                     }
                     binding.rlView1.setTag(info.getId());
                     binding.rlView1.setVisibility(View.VISIBLE);
+
+                    GSYVideoManager.releaseAllVideos();
+                    detailPlayer.setUp(topVideoUrl, true, "");
+                    detailPlayer.startPlayLogic();
+
                 } else {
                     binding.videoView1.setVisibility(View.GONE);
                     binding.videoView1Image.setVisibility(View.VISIBLE);
@@ -241,10 +250,10 @@ public class SlideListFragment extends Fragment {
         //视频封面ImageView
         topVideoCover = new ImageView(getActivity());
         topVideoCover.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        topVideoCover.setImageResource(R.drawable.aiqiyi);
 
+        Log.d("VideoPlayer TYPE: ", topVideoType + "");
         detailPlayer = binding.videoView1;
-        initVideoPlayer();
+
         return binding.getRoot();
     }
 
@@ -283,6 +292,10 @@ public class SlideListFragment extends Fragment {
     }
 
     private void initVideoPlayer() {
+
+        if(topVideoType == 1) {
+            return;
+        }
         //增加title
         detailPlayer.getTitleTextView().setVisibility(View.GONE);
         detailPlayer.getBackButton().setVisibility(View.GONE);
@@ -328,6 +341,13 @@ public class SlideListFragment extends Fragment {
 //                        if (orientationUtils != null) {
 //                            orientationUtils.backToProtVideo();
 //                        }
+                    }
+
+                    @Override
+                    public void onQuitSmallWidget(String url, Object... objects) {
+                        super.onQuitSmallWidget(url, objects);
+                        GSYVideoManager.onPause();
+
                     }
                 }).setLockClickListener(new LockClickListener() {
                     @Override
@@ -377,6 +397,12 @@ public class SlideListFragment extends Fragment {
         });
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        GSYVideoManager.onPause();
+    }
+
     /**
      * 返回是否全屏
      * @return
@@ -392,11 +418,11 @@ public class SlideListFragment extends Fragment {
 //        binding.videoView1.onStartPlayer();
         // 播放
         // topVideoUrl = "http://tengdamy.cn/video/video2.mp4";
-        if(topVideoUrl != null && !("").equals(topVideoUrl)) {
+        if(topVideoType == 2 && topVideoUrl != null && !("").equals(topVideoUrl)) {
             detailPlayer.setUp(topVideoUrl, true, "");
             detailPlayer.startPlayLogic();
         } else {
-            Toast.makeText(getContext(), "请先设置视频地址", Toast.LENGTH_LONG).show();
+
         }
     }
 
@@ -450,7 +476,5 @@ public class SlideListFragment extends Fragment {
         super.onPause();
         GSYVideoManager.onPause();
     }
-
-
 
 }

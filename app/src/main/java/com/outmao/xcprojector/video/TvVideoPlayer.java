@@ -288,6 +288,8 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
     private static final int RIGHT = 1;
     private static final int CANCLE = 2;
 
+    private static final int STOP = 3;
+
     private static int tim = 2;
 
     //程序启动时，初始化并发送消息
@@ -336,10 +338,16 @@ public class TvVideoPlayer extends NormalGSYVideoPlayer {
 //                        return true;
                     }
                     break;
+                case STOP:
+                    clickStartIcon();
+                    break;
             }
         }
     }
 
+    public void stopVideo() {
+        mHandler.sendEmptyMessage(STOP);
+    }
     //重置
     public void resetTime() {
         mHandler.removeMessages(CANCLE);
