@@ -73,11 +73,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void go(){
-        if(SharepreferencesUtils.getShareInstance().getString(AppConfig.NEW_ACTIVE)==null){
-            goActivate();
-            return;
-        }
         if(!isNetwork()){
+            if(SharepreferencesUtils.getShareInstance().getString(AppConfig.NEW_ACTIVE)==null){
+                goActivate();
+                return;
+            }
             Toast.makeText(getBaseContext(), "无网络，请先联接WIFY", Toast.LENGTH_LONG).show();
             error=true;
             return;
