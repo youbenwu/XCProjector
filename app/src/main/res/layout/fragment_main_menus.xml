@@ -26,7 +26,7 @@
 
         <com.outmao.xcprojector.views.MenuItemView
             android:id="@+id/menu_home"
-            app:title="首页"
+            app:title="首  页"
             app:subtitle="HOME"
             android:layout_alignTop="@+id/rl_bg"
             android:layout_marginLeft="71dp"
