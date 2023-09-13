@@ -267,7 +267,8 @@ public class HomeActivity extends AppCompatActivity {
                 if(action==MainMenusFragment.MENU_ACTION_HOME){
                     pageIndex=0;
                     NavController navController = Navigation.findNavController(HomeActivity.this, R.id.nav_host_fragment_content_main);
-                    navController.navigate(R.id.HomeFragment);
+                    //navController.navigate(R.id.HomeFragment);
+                    navController.popBackStack(R.id.HomeFragment,false);
                     return true;
                 }else if(action==MainMenusFragment.MENU_ACTION_SETUP){
                     onClickSetting();

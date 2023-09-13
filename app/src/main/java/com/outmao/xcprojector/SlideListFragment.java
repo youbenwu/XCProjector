@@ -32,6 +32,7 @@ import com.outmao.xcprojector.databinding.FragmentSlideListBinding;
 import com.outmao.xcprojector.image.ImagePagerActivity;
 import com.outmao.xcprojector.network.RxSubscriber;
 import com.outmao.xcprojector.network.YYResponseData;
+import com.outmao.xcprojector.util.SharepreferencesUtils;
 import com.outmao.xcprojector.video.TvVideoPlayer;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
@@ -105,12 +106,19 @@ public class SlideListFragment extends Fragment {
         binding.videoView3.setDestImage(R.drawable.ic_play_mb2);
         //Glide.with(this).load("https://qn.huwing.cn/2023/09/01/16935609583821101-1920_1080.jpg").centerCrop().into(binding.testImage);
 
-        updateData();
         if(data==null){
             loadData();
         }
+        loadLocalData();
+        updateData();
     }
 
+    private void loadLocalData(){
+//        String json=SharepreferencesUtils.getShareInstance().getString(HomeFragment.save_key+"-"+page);
+//        if(json!=null) {
+//            data = new Gson().fromJson(json, SlideListData.class);
+//        }
+    }
 
     private void loadData(){
         HttpApiService.getInstance().slide_list(page,5)
@@ -132,6 +140,7 @@ public class SlideListFragment extends Fragment {
                         if(responseData.isSuccess()){
                             data=responseData.getData();
                             if(data.getSub_slides()!=null&&data.getSub_slides().getLast_page()>0&&data.getSub_slides().getList().size()>0) {
+                                SharepreferencesUtils.getShareInstance().putString(HomeFragment.save_key+"-"+page,new Gson().toJson(data));
                                 updateData();
                                 return;
                             }
@@ -438,15 +447,6 @@ public class SlideListFragment extends Fragment {
         });
     }
 
-     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        //GSYVideoManager.onPause();
-         if(!isVisibleToUser){
-             stopPlay();
-         }
-    }
-
     /**
      * 返回是否全屏
      * @return
@@ -461,16 +461,8 @@ public class SlideListFragment extends Fragment {
     }
 
     public void onPageSelected(boolean selected){
-        if(selected){
-            showUser=true;
-            startPlay();
-        }else{
-            showUser=false;
-            stopPlay();
-        }
+        showUser=selected;
     }
-
-
 
 
     private void openSystemVideo(String url) throws Exception {
@@ -505,74 +497,60 @@ public class SlideListFragment extends Fragment {
                 });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //GSYVideoManager.onResume();
-        if(showUser){
-            startPlay();
-        }
-    }
+
 
     private Handler playHandler=new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(@NonNull Message msg) {
-            int action=msg.getData().getInt("action");
-            if(action==PLAY) {
-                if (topVideoUrl != null && topVideoUrl.length() > 0) {
-                    if(detailPlayer.isActivated()){
-                        return false;
-                    }
-                    GSYVideoManager.releaseAllVideos();
-                    detailPlayer.setUp(topVideoUrl, true, "");
-                    detailPlayer.startPlayLogic();
+            if (topVideoUrl != null && topVideoUrl.length() > 0) {
+                if(detailPlayer.isActivated()){
+                    return false;
                 }
-            }else if(action==STOP){
-                detailPlayer.onVideoPause();
-            }else if(action==RELEASE){
-                detailPlayer.release();
+                GSYVideoManager.releaseAllVideos();
+                detailPlayer.setUp(topVideoUrl, true, "");
+                detailPlayer.startPlayLogic();
             }
             return false;
         }
     });
 
-    public static final int PLAY=0;
-    public static final int STOP=1;
-    public static final int RELEASE=2;
 
     private void startPlay(){
-        Bundle bundle=new Bundle();
-        bundle.putInt("action",PLAY);
-        Message m=new Message();
-        m.setData(bundle);
-        playHandler.sendMessage(m);
+        playHandler.sendMessage(new Message());
     }
 
-    private void stopPlay(){
-        Bundle bundle=new Bundle();
-        bundle.putInt("action",STOP);
-        Message m=new Message();
-        m.setData(bundle);
-        playHandler.sendMessage(m);
+    private void pausePlay(){
+        detailPlayer.onVideoPause();
     }
 
     private void releasePlay(){
         detailPlayer.release();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //GSYVideoManager.releaseAllVideos();
-        releasePlay();
+    private void resumePlay(){
+        detailPlayer.onVideoResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        //GSYVideoManager.onPause();
-        stopPlay();
+        pausePlay();
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        //resumePlay();
+        if(showUser) {
+            startPlay();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        releasePlay();
+    }
+
 
 
 
